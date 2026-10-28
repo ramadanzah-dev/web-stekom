@@ -1,0 +1,18 @@
+# Kredensial asli tidak boleh masuk repo
+/config/database.php
+
+# Runtime
+/storage/*.log
+/storage/cache/*
+!/storage/cache/.gitkeep
+
+# Upload pengguna
+/public/assets/uploads/*
+!/public/assets/uploads/.gitkeep
+
+# Editor & OS
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
