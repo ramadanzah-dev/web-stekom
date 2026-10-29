@@ -129,6 +129,41 @@ final class AdminPengurusController extends BaseAdminController
         $this->redirect('/admin/pengurus');
     }
 
+    public function bulkDestroy(): void
+    {
+        $this->guardCsrf();
+
+        $ids = $_POST['ids'] ?? [];
+
+        if (!is_array($ids) || $ids === []) {
+            $this->flash('error', 'Tidak ada pengurus yang dipilih.');
+            $this->redirect('/admin/pengurus');
+
+            return;
+        }
+
+        $cleanIds = array_map('intval', array_filter($ids, static fn ($id) => filter_var($id, FILTER_VALIDATE_INT) !== false));
+
+        if ($cleanIds === []) {
+            $this->flash('error', 'Pilihan pengurus tidak valid.');
+            $this->redirect('/admin/pengurus');
+
+            return;
+        }
+
+        $model = new Pengurus();
+        $items = $model->findMany($cleanIds);
+        $model->deleteMany($cleanIds);
+
+        foreach ($items as $item) {
+            Upload::delete((string) ($item['foto'] ?? ''));
+        }
+
+        $count = count($items);
+        $this->flash('success', "Berhasil menghapus {$count} pengurus.");
+        $this->redirect('/admin/pengurus');
+    }
+
     /**
      * @param array<string, mixed> $input
      * @return array{0: array{nama: string, jabatan: string, divisi_id: ?int, periode: string, urutan: int, aktif: int}, 1: array<string, string>}

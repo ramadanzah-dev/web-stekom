@@ -23,6 +23,7 @@ final class AdminKegiatanController extends BaseAdminController
             'kategori' => 'Agenda',
             'deskripsi' => '',
             'lokasi' => '',
+            'tautan' => '',
             'tanggal_mulai' => date('Y-m-d'),
             'aktif' => 1,
         ]));
@@ -97,9 +98,40 @@ final class AdminKegiatanController extends BaseAdminController
         $this->redirect('/admin/kegiatan');
     }
 
+    public function bulkDestroy(): void
+    {
+        $this->guardCsrf();
+
+        $ids = $_POST['ids'] ?? [];
+
+        if (!is_array($ids) || $ids === []) {
+            $this->flash('error', 'Tidak ada kegiatan yang dipilih.');
+            $this->redirect('/admin/kegiatan');
+
+            return;
+        }
+
+        $cleanIds = array_map('intval', array_filter($ids, static fn ($id) => filter_var($id, FILTER_VALIDATE_INT) !== false));
+
+        if ($cleanIds === []) {
+            $this->flash('error', 'Pilihan kegiatan tidak valid.');
+            $this->redirect('/admin/kegiatan');
+
+            return;
+        }
+
+        $model = new Kegiatan();
+        $items = $model->findMany($cleanIds);
+        $model->deleteMany($cleanIds);
+
+        $count = count($items);
+        $this->flash('success', "Berhasil menghapus {$count} kegiatan.");
+        $this->redirect('/admin/kegiatan');
+    }
+
     /**
      * @param array<string, mixed> $input
-     * @return array{0: array{judul: string, kategori: string, deskripsi: string, lokasi: string, tanggal_mulai: string, aktif: int}, 1: array<string, string>}
+     * @return array{0: array{judul: string, kategori: string, deskripsi: string, lokasi: string, tautan: string, tanggal_mulai: string, aktif: int}, 1: array<string, string>}
      */
     private function validated(array $input): array
     {
@@ -109,6 +141,7 @@ final class AdminKegiatanController extends BaseAdminController
         $kategori = trim((string) ($input['kategori'] ?? 'Agenda'));
         $deskripsi = trim((string) ($input['deskripsi'] ?? ''));
         $lokasi = trim((string) ($input['lokasi'] ?? ''));
+        $tautan = trim((string) ($input['tautan'] ?? ''));
         $tanggalMulai = trim((string) ($input['tanggal_mulai'] ?? ''));
         $aktif = isset($input['aktif']) && $input['aktif'] === '1' ? 1 : 0;
 
@@ -124,6 +157,14 @@ final class AdminKegiatanController extends BaseAdminController
             $errors['kategori'] = 'Kategori maksimal 50 karakter.';
         }
 
+        if ($tautan !== '') {
+            if (mb_strlen($tautan) > 255) {
+                $errors['tautan'] = 'Tautan maksimal 255 karakter.';
+            } elseif (!filter_var($tautan, FILTER_VALIDATE_URL) && !str_starts_with($tautan, '/')) {
+                $errors['tautan'] = 'Format URL tidak valid (gunakan https://... atau /path).';
+            }
+        }
+
         if ($tanggalMulai === '') {
             $errors['tanggal_mulai'] = 'Tanggal mulai wajib diisi.';
         } elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $tanggalMulai)) {
@@ -136,6 +177,7 @@ final class AdminKegiatanController extends BaseAdminController
                 'kategori' => $kategori,
                 'deskripsi' => $deskripsi,
                 'lokasi' => $lokasi,
+                'tautan' => $tautan,
                 'tanggal_mulai' => $tanggalMulai,
                 'aktif' => $aktif,
             ],
@@ -153,6 +195,7 @@ final class AdminKegiatanController extends BaseAdminController
             'kategori' => $this->input('kategori'),
             'deskripsi' => $this->input('deskripsi'),
             'lokasi' => $this->input('lokasi'),
+            'tautan' => $this->input('tautan'),
             'tanggal_mulai' => $this->input('tanggal_mulai'),
             'aktif' => isset($_POST['aktif']) && $_POST['aktif'] === '1' ? 1 : 0,
         ];

@@ -95,6 +95,37 @@ final class AdminDivisiController extends BaseAdminController
         $this->redirect('/admin/divisi');
     }
 
+    public function bulkDestroy(): void
+    {
+        $this->guardCsrf();
+
+        $ids = $_POST['ids'] ?? [];
+
+        if (!is_array($ids) || $ids === []) {
+            $this->flash('error', 'Tidak ada divisi yang dipilih.');
+            $this->redirect('/admin/divisi');
+
+            return;
+        }
+
+        $cleanIds = array_map('intval', array_filter($ids, static fn ($id) => filter_var($id, FILTER_VALIDATE_INT) !== false));
+
+        if ($cleanIds === []) {
+            $this->flash('error', 'Pilihan divisi tidak valid.');
+            $this->redirect('/admin/divisi');
+
+            return;
+        }
+
+        $model = new Divisi();
+        $items = $model->findMany($cleanIds);
+        $model->deleteMany($cleanIds);
+
+        $count = count($items);
+        $this->flash('success', "Berhasil menghapus {$count} divisi. Pengurus terkait kini tanpa divisi.");
+        $this->redirect('/admin/divisi');
+    }
+
     /**
      * @param array<string, mixed> $input
      * @return array{0: array{nama: string, slug: string, tagline: string, deskripsi: string}, 1: array<string, string>}

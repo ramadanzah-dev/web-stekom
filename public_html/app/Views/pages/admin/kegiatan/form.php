@@ -95,6 +95,22 @@ $borderClass = static fn (string $key): string => $fieldError($key) ? 'border-re
             </div>
 
             <div class="mt-4">
+                <label for="tautan" class="block text-[13px] font-semibold text-ink">Tautan Kegiatan (URL / Pendaftaran)</label>
+                <input
+                    type="text"
+                    id="tautan"
+                    name="tautan"
+                    value="<?= e((string) ($values['tautan'] ?? '')) ?>"
+                    maxlength="255"
+                    class="<?= e($inputClass . ' ' . $borderClass('tautan')) ?>"
+                    placeholder="https://... atau /pendaftaran"
+                >
+                <?php if ($fieldError('tautan')): ?>
+                    <p class="mt-1.5 text-xs font-medium text-red"><?= e($errors['tautan']) ?></p>
+                <?php endif; ?>
+            </div>
+
+            <div class="mt-4">
                 <label for="deskripsi" class="block text-[13px] font-semibold text-ink">Deskripsi singkat</label>
                 <textarea
                     id="deskripsi"

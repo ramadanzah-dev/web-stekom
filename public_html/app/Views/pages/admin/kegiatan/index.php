@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 ?>
+<form method="post" action="<?= url('/admin/kegiatan/bulk-delete') ?>" id="bulk-delete-form" data-confirm-title="Hapus kegiatan terpilih?" data-confirm="Semua kegiatan yang dipilih akan dihapus permanen. Tindakan ini tidak bisa dibatalkan." data-confirm-label="Hapus terpilih">
+    <?= csrf_field() ?>
+</form>
+
 <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
     <div>
         <h1 class="font-display text-[clamp(1.8rem,3.4vw,2.2rem)] font-black uppercase leading-[0.94] tracking-[-0.04em]">
@@ -10,13 +14,25 @@ declare(strict_types=1);
         </h1>
         <p class="mt-1 text-sm text-muted">Daftar agenda dan kegiatan yang tampil di halaman Beranda.</p>
     </div>
-    <a
-        href="<?= url('/admin/kegiatan/tambah') ?>"
-        class="press inline-flex items-center gap-2 bg-cobalt px-5 py-3 text-sm font-bold text-bone transition hover:bg-ink"
-    >
-        <svg class="h-4 w-4" aria-hidden="true"><use href="#i-plus"/></svg>
-        Tambah Kegiatan
-    </a>
+    <div class="flex flex-wrap items-center gap-3">
+        <button
+            type="submit"
+            form="bulk-delete-form"
+            id="bulk-delete-btn"
+            disabled
+            class="press inline-flex items-center gap-2 border border-red/30 bg-white px-4 py-3 text-sm font-bold text-red transition hover:bg-red hover:text-bone disabled:cursor-not-allowed disabled:opacity-40"
+        >
+            <svg class="h-4 w-4" aria-hidden="true"><use href="#i-trash"/></svg>
+            Hapus Terpilih <span data-bulk-count></span>
+        </button>
+        <a
+            href="<?= url('/admin/kegiatan/tambah') ?>"
+            class="press inline-flex items-center gap-2 bg-cobalt px-5 py-3 text-sm font-bold text-bone transition hover:bg-ink"
+        >
+            <svg class="h-4 w-4" aria-hidden="true"><use href="#i-plus"/></svg>
+            Tambah Kegiatan
+        </a>
+    </div>
 </div>
 
 <?php if (empty($items)): ?>
@@ -27,10 +43,18 @@ declare(strict_types=1);
         </a>
     </div>
 <?php else: ?>
-    <div class="mt-8 overflow-x-auto border border-ink/10 bg-white">
+    <div class="mt-8 overflow-x-auto border border-ink/10 bg-white" data-bulk-table>
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr class="border-b border-ink/10 bg-bone/60 text-[11px] font-bold uppercase tracking-wider text-muted">
+                    <th class="p-4 w-10">
+                        <input
+                            type="checkbox"
+                            data-select-all
+                            aria-label="Pilih semua kegiatan"
+                            class="h-4 w-4 rounded border-ink/30 text-cobalt focus:ring-cobalt/20"
+                        >
+                    </th>
                     <th class="p-4">Tanggal &amp; Waktu</th>
                     <th class="p-4">Kegiatan</th>
                     <th class="p-4">Kategori &amp; Lokasi</th>
@@ -41,6 +65,15 @@ declare(strict_types=1);
             <tbody class="divide-y divide-ink/10 text-sm">
                 <?php foreach ($items as $item): ?>
                     <tr class="transition hover:bg-bone/30">
+                        <td class="p-4">
+                            <input
+                                type="checkbox"
+                                name="ids[]"
+                                value="<?= $item['id'] ?>"
+                                aria-label="Pilih: <?= e($item['judul']) ?>"
+                                class="item-checkbox h-4 w-4 rounded border-ink/30 text-cobalt focus:ring-cobalt/20"
+                            >
+                        </td>
                         <td class="p-4 whitespace-nowrap font-mono text-xs tabular-nums text-muted">
                             <?= e($item['tanggal_mulai']) ?>
                         </td>

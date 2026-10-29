@@ -134,7 +134,7 @@ $borderClass = static fn (string $key): string => $fieldError($key) ? 'border-re
                             <?= $aktif ? 'checked' : '' ?>
                             class="h-4 w-4 accent-cobalt"
                         >
-                        <span class="text-sm text-muted">Tampilkan di situs</span>
+                        <span class="text-sm text-muted">aktif</span>
                     </label>
                 </div>
             </div>

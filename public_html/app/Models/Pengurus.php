@@ -138,6 +138,46 @@ final class Pengurus
         return $statement->execute();
     }
 
+    /**
+     * @param array<int> $ids
+     * @return array<int, array<string, mixed>>
+     */
+    public function findMany(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        $pdo = Database::connection();
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $statement = $pdo->prepare(
+            'SELECT p.id, p.nama, p.foto, p.jabatan, p.divisi_id, p.periode, p.urutan, p.aktif,
+                    d.nama AS divisi_nama
+             FROM pengurus p
+             LEFT JOIN divisi d ON d.id = p.divisi_id
+             WHERE p.id IN (' . $placeholders . ')'
+        );
+        $statement->execute($ids);
+
+        return $statement->fetchAll();
+    }
+
+    /**
+     * @param array<int> $ids
+     */
+    public function deleteMany(array $ids): bool
+    {
+        if ($ids === []) {
+            return false;
+        }
+
+        $pdo = Database::connection();
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $statement = $pdo->prepare("DELETE FROM pengurus WHERE id IN ($placeholders)");
+
+        return $statement->execute($ids);
+    }
+
     public function count(): int
     {
         return (int) Database::connection()->query('SELECT COUNT(*) FROM pengurus')->fetchColumn();

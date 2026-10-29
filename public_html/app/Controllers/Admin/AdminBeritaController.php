@@ -139,6 +139,41 @@ final class AdminBeritaController extends BaseAdminController
         $this->redirect('/admin/berita');
     }
 
+    public function bulkDestroy(): void
+    {
+        $this->guardCsrf();
+
+        $ids = $_POST['ids'] ?? [];
+
+        if (!is_array($ids) || $ids === []) {
+            $this->flash('error', 'Tidak ada berita yang dipilih.');
+            $this->redirect('/admin/berita');
+
+            return;
+        }
+
+        $cleanIds = array_map('intval', array_filter($ids, static fn ($id) => filter_var($id, FILTER_VALIDATE_INT) !== false));
+
+        if ($cleanIds === []) {
+            $this->flash('error', 'Pilihan berita tidak valid.');
+            $this->redirect('/admin/berita');
+
+            return;
+        }
+
+        $model = new Berita();
+        $items = $model->findMany($cleanIds);
+        $model->deleteMany($cleanIds);
+
+        foreach ($items as $item) {
+            Upload::delete((string) ($item['gambar'] ?? ''));
+        }
+
+        $count = count($items);
+        $this->flash('success', "Berhasil menghapus {$count} berita.");
+        $this->redirect('/admin/berita');
+    }
+
     /**
      * @param array<string, mixed> $input
      * @return array{0: array{judul: string, slug: string, kategori: string, ringkasan: string, isi: string, penulis: string, diterbitkan_pada: string}, 1: array<string, string>}

@@ -159,19 +159,24 @@ final class AdminPengaturanController extends BaseAdminController
     private function values(): array
     {
         $site = (array) config('site');
+        $saved = (new Pengaturan())->all();
 
         return [
-            'site_name' => (string) ($site['name'] ?? ''),
-            'site_full_name' => (string) ($site['full_name'] ?? ''),
-            'site_tagline' => (string) ($site['tagline'] ?? ''),
-            'site_description' => (string) ($site['description'] ?? ''),
-            'site_periode' => (string) ($site['periode'] ?? ''),
-            'site_email' => (string) ($site['email'] ?? ''),
-            'site_instagram' => (string) ($site['instagram'] ?? ''),
-            'site_location' => (string) ($site['location'] ?? ''),
-            'site_footer_text' => (string) ($site['footer_text'] ?? ''),
-            'site_footer_note' => (string) ($site['footer_note'] ?? ''),
-            'site_logo' => (string) ($site['logo'] ?? ''),
+            'site_name' => (string) ($saved['site_name'] ?? $site['name'] ?? ''),
+            'site_full_name' => (string) ($saved['site_full_name'] ?? $site['full_name'] ?? ''),
+            'site_tagline' => (string) ($saved['site_tagline'] ?? $site['tagline'] ?? ''),
+            'site_description' => (string) ($saved['site_description'] ?? $site['description'] ?? ''),
+            'site_periode' => (string) ($saved['site_periode'] ?? $site['periode'] ?? ''),
+            'site_email' => (string) ($saved['site_email'] ?? $site['email'] ?? ''),
+            'site_instagram' => (string) ($saved['site_instagram'] ?? $site['instagram'] ?? ''),
+            'site_location' => (string) ($saved['site_location'] ?? $site['location'] ?? ''),
+            'site_footer_text' => (string) ($saved['site_footer_text'] ?? $site['footer_text'] ?? ''),
+            'site_footer_note' => (string) ($saved['site_footer_note'] ?? $site['footer_note'] ?? ''),
+            'site_logo' => (string) ($saved['site_logo'] ?? $site['logo'] ?? ''),
+            'site_marquee' => (string) ($saved['site_marquee'] ?? ''),
+            'oprec_deadline' => (string) ($saved['oprec_deadline'] ?? ''),
+            'oprec_link' => (string) ($saved['oprec_link'] ?? ''),
+            'oprec_aktif' => (string) ($saved['oprec_aktif'] ?? '0'),
         ];
     }
 

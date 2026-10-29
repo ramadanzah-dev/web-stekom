@@ -236,22 +236,30 @@ declare(strict_types=1);
                                 <span class="text-xs text-bone/60"><?= count($members) ?> pengurus</span>
                             </div>
 
-                            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                            <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                                 <?php foreach ($members as $p): ?>
                                     <?php $pFoto = trim((string) ($p['foto'] ?? '')); ?>
-                                    <div class="flex items-center gap-3 bg-ink p-4 border border-bone/10">
-                                        <span class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden bg-cobalt-deep font-display text-xs font-bold text-bone">
+                                    <article class="group border border-bone/15 bg-ink transition hover:border-gold">
+                                        <div class="aspect-[4/5] overflow-hidden bg-cobalt-deep">
                                             <?php if ($pFoto !== ''): ?>
-                                                <img src="<?= e(asset($pFoto)) ?>" alt="" class="h-full w-full object-cover">
+                                                <img
+                                                    src="<?= e(asset($pFoto)) ?>"
+                                                    alt="Foto <?= e($p['nama']) ?>"
+                                                    loading="lazy"
+                                                    class="h-full w-full object-cover"
+                                                >
                                             <?php else: ?>
-                                                <?= e(initials((string) $p['nama'])) ?>
+                                                <span class="grid h-full w-full place-items-center bg-gold font-display text-4xl font-black text-ink">
+                                                    <?= e(initials((string) $p['nama'])) ?>
+                                                </span>
                                             <?php endif; ?>
-                                        </span>
-                                        <div class="min-w-0">
-                                            <p class="font-display text-xs font-bold text-bone truncate"><?= e($p['nama']) ?></p>
-                                            <p class="text-[11px] text-gold truncate"><?= e($p['jabatan']) ?><?= !empty($p['divisi_nama']) ? ' · ' . e($p['divisi_nama']) : '' ?></p>
                                         </div>
-                                    </div>
+                                        <div class="p-5">
+                                            <p class="text-xs font-bold uppercase tracking-wider text-gold"><?= e($p['jabatan']) ?><?= !empty($p['divisi_nama']) ? ' · ' . e($p['divisi_nama']) : '' ?></p>
+                                            <h5 class="mt-2 font-display text-lg font-bold text-bone"><?= e($p['nama']) ?></h5>
+                                            <p class="mt-1 text-xs text-bone/60">Periode <?= e($periodeKey) ?></p>
+                                        </div>
+                                    </article>
                                 <?php endforeach; ?>
                             </div>
                         </div>

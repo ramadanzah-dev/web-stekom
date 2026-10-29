@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 $jumlahAktif = count(array_filter($items, static fn (array $item): bool => (int) $item['aktif'] === 1));
 ?>
+<form method="post" action="<?= url('/admin/pengurus/bulk-delete') ?>" id="bulk-delete-form" data-confirm-title="Hapus pengurus terpilih?" data-confirm="Semua pengurus yang dipilih akan dihapus dari daftar. Tindakan ini tidak bisa dibatalkan." data-confirm-label="Hapus terpilih">
+    <?= csrf_field() ?>
+</form>
+
 <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
     <div>
         <p class="text-xs font-medium text-muted">Struktur · <?= e((string) count($items)) ?> orang</p>
@@ -15,10 +19,22 @@ $jumlahAktif = count(array_filter($items, static fn (array $item): bool => (int)
         </p>
     </div>
 
-    <a href="<?= url('/admin/pengurus/create') ?>" class="press inline-flex shrink-0 items-center justify-between gap-5 self-start bg-cobalt px-5 py-3 text-sm font-bold text-bone transition hover:bg-ink sm:self-auto">
-        Tambah pengurus
-        <svg class="h-4 w-4" aria-hidden="true"><use href="#i-plus"/></svg>
-    </a>
+    <div class="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+        <button
+            type="submit"
+            form="bulk-delete-form"
+            id="bulk-delete-btn"
+            disabled
+            class="press inline-flex items-center gap-2 border border-red/30 bg-white px-4 py-3 text-sm font-bold text-red transition hover:bg-red hover:text-bone disabled:cursor-not-allowed disabled:opacity-40"
+        >
+            <svg class="h-4 w-4" aria-hidden="true"><use href="#i-trash"/></svg>
+            Hapus Terpilih <span data-bulk-count></span>
+        </button>
+        <a href="<?= url('/admin/pengurus/create') ?>" class="press inline-flex shrink-0 items-center justify-between gap-5 bg-cobalt px-5 py-3 text-sm font-bold text-bone transition hover:bg-ink">
+            Tambah pengurus
+            <svg class="h-4 w-4" aria-hidden="true"><use href="#i-plus"/></svg>
+        </a>
+    </div>
 </div>
 
 <div class="mt-6 flex flex-wrap items-center gap-2 text-xs font-medium">
@@ -39,11 +55,18 @@ $jumlahAktif = count(array_filter($items, static fn (array $item): bool => (int)
         </a>
     </div>
 <?php else: ?>
-    <div class="mt-6 overflow-hidden border border-ink/10 bg-white">
+    <div class="mt-6 overflow-hidden border border-ink/10 bg-white" data-bulk-table>
         <div class="divide-y divide-ink/10 md:hidden">
             <?php foreach ($items as $person): ?>
                 <?php $foto = gambar_url($person['foto'] ?? null); ?>
-                <article class="flex gap-3 px-4 py-4">
+                <article class="flex items-start gap-3 px-4 py-4">
+                    <input
+                        type="checkbox"
+                        name="ids[]"
+                        value="<?= $person['id'] ?>"
+                        aria-label="Pilih: <?= e($person['nama']) ?>"
+                        class="item-checkbox mt-1 h-4 w-4 rounded border-ink/30 text-cobalt focus:ring-cobalt/20"
+                    >
                     <span class="relative grid h-11 w-11 shrink-0 place-items-center overflow-hidden bg-gold font-display text-xs font-black text-ink">
                         <?php if ($foto !== null): ?>
                             <img src="<?= e($foto) ?>" alt="" loading="lazy" class="h-full w-full object-cover">
@@ -84,6 +107,14 @@ $jumlahAktif = count(array_filter($items, static fn (array $item): bool => (int)
             <table class="w-full text-left">
                 <thead>
                     <tr class="border-b border-ink/10">
+                        <th scope="col" class="w-12 px-5 py-3">
+                            <input
+                                type="checkbox"
+                                data-select-all
+                                aria-label="Pilih semua pengurus"
+                                class="h-4 w-4 rounded border-ink/30 text-cobalt focus:ring-cobalt/20"
+                            >
+                        </th>
                         <th scope="col" class="px-5 py-3 text-xs font-semibold text-muted">Pengurus</th>
                         <th scope="col" class="hidden px-4 py-3 text-xs font-semibold text-muted md:table-cell">Jabatan</th>
                         <th scope="col" class="hidden px-4 py-3 text-xs font-semibold text-muted xl:table-cell">Divisi</th>
@@ -96,6 +127,15 @@ $jumlahAktif = count(array_filter($items, static fn (array $item): bool => (int)
                     <?php foreach ($items as $person): ?>
                         <?php $foto = gambar_url($person['foto'] ?? null); ?>
                         <tr class="transition hover:bg-bone">
+                            <td class="w-12 px-5 py-4">
+                                <input
+                                    type="checkbox"
+                                    name="ids[]"
+                                    value="<?= $person['id'] ?>"
+                                    aria-label="Pilih: <?= e($person['nama']) ?>"
+                                    class="item-checkbox h-4 w-4 rounded border-ink/30 text-cobalt focus:ring-cobalt/20"
+                                >
+                            </td>
                             <td class="px-5 py-4">
                                 <div class="flex items-center gap-3">
                                     <span class="relative grid h-11 w-11 shrink-0 place-items-center overflow-hidden bg-gold font-display text-xs font-black text-ink">

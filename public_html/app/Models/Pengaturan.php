@@ -41,7 +41,7 @@ final class Pengaturan
     }
 
     /**
-     * Terapkan pengaturan bertanda "site_" ke konfigurasi situs.
+     * Terapkan pengaturan ke konfigurasi global aplikasi.
      *
      * @param array<string, mixed> $defaults
      * @return array<string, mixed>
@@ -49,11 +49,11 @@ final class Pengaturan
     public function apply(array $defaults): array
     {
         foreach ($this->all() as $key => $value) {
-            if (!str_starts_with($key, 'site_')) {
-                continue;
-            }
+            $GLOBALS['app_config'][$key] = $value;
 
-            $defaults[substr($key, 5)] = $value;
+            if (str_starts_with($key, 'site_')) {
+                $defaults[substr($key, 5)] = $value;
+            }
         }
 
         return $defaults;

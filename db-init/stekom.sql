@@ -137,6 +137,7 @@ CREATE TABLE `kegiatan` (
   `kategori` varchar(50) NOT NULL DEFAULT 'Agenda',
   `deskripsi` text DEFAULT NULL,
   `lokasi` varchar(150) DEFAULT NULL,
+  `tautan` varchar(255) DEFAULT NULL,
   `tanggal_mulai` date NOT NULL,
   `aktif` tinyint(1) unsigned NOT NULL DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -153,15 +154,15 @@ CREATE TABLE `kegiatan` (
 LOCK TABLES `kegiatan` WRITE;
 /*!40000 ALTER TABLE `kegiatan` DISABLE KEYS */;
 INSERT INTO `kegiatan` VALUES
-(1,'Workshop Embedded','Workshop','Dari sensor ke dashboard: praktik langsung merakit perangkat IoT.','Lab Hardware','2026-11-08',1,'2026-10-28 08:47:24','2026-10-28 08:47:24'),
-(2,'Sistem Komputer Expo','Expo','Pameran karya mahasiswa, talkshow industri, dan jejaring alumni.','Auditorium Kampus','2026-11-12',1,'2026-10-28 08:47:24','2026-10-28 08:47:24'),
-(3,'Batas Open Recruitment','Pendaftaran','Kesempatan terakhir buat gabung angkatan 2026/2027.','Online','2026-11-30',1,'2026-10-28 08:47:24','2026-10-28 08:47:24'),
-(4,'Workshop Embedded','Workshop','Dari sensor ke dashboard: praktik langsung merakit perangkat IoT.','Lab Hardware','2026-11-08',1,'2026-10-28 09:09:46','2026-10-28 09:09:46'),
-(5,'Sistem Komputer Expo','Expo','Pameran karya mahasiswa, talkshow industri, dan jejaring alumni.','Auditorium Kampus','2026-11-12',1,'2026-10-28 09:09:46','2026-10-28 09:09:46'),
-(6,'Batas Open Recruitment','Pendaftaran','Kesempatan terakhir buat gabung angkatan 2026/2027.','Online','2026-11-30',1,'2026-10-28 09:09:46','2026-10-28 09:09:46'),
-(7,'Workshop Embedded','Workshop','Dari sensor ke dashboard: praktik langsung merakit perangkat IoT.','Lab Hardware','2026-11-08',1,'2026-10-28 09:10:17','2026-10-28 09:10:17'),
-(8,'Sistem Komputer Expo','Expo','Pameran karya mahasiswa, talkshow industri, dan jejaring alumni.','Auditorium Kampus','2026-11-12',1,'2026-10-28 09:10:17','2026-10-28 09:10:17'),
-(9,'Batas Open Recruitment','Pendaftaran','Kesempatan terakhir buat gabung angkatan 2026/2027.','Online','2026-11-30',1,'2026-10-28 09:10:17','2026-10-28 09:10:17');
+(1,'Workshop Embedded','Workshop','Dari sensor ke dashboard: praktik langsung merakit perangkat IoT.','Lab Hardware',NULL,'2026-11-08',1,'2026-10-28 08:47:24','2026-10-28 08:47:24'),
+(2,'Sistem Komputer Expo','Expo','Pameran karya mahasiswa, talkshow industri, dan jejaring alumni.','Auditorium Kampus',NULL,'2026-11-12',1,'2026-10-28 08:47:24','2026-10-28 08:47:24'),
+(3,'Batas Open Recruitment','Pendaftaran','Kesempatan terakhir buat gabung angkatan 2026/2027.','Online',NULL,'2026-11-30',1,'2026-10-28 08:47:24','2026-10-28 08:47:24'),
+(4,'Workshop Embedded','Workshop','Dari sensor ke dashboard: praktik langsung merakit perangkat IoT.','Lab Hardware',NULL,'2026-11-08',1,'2026-10-28 09:09:46','2026-10-28 09:09:46'),
+(5,'Sistem Komputer Expo','Expo','Pameran karya mahasiswa, talkshow industri, dan jejaring alumni.','Auditorium Kampus',NULL,'2026-11-12',1,'2026-10-28 09:09:46','2026-10-28 09:09:46'),
+(6,'Batas Open Recruitment','Pendaftaran','Kesempatan terakhir buat gabung angkatan 2026/2027.','Online',NULL,'2026-11-30',1,'2026-10-28 09:09:46','2026-10-28 09:09:46'),
+(7,'Workshop Embedded','Workshop','Dari sensor ke dashboard: praktik langsung merakit perangkat IoT.','Lab Hardware',NULL,'2026-11-08',1,'2026-10-28 09:10:17','2026-10-28 09:10:17'),
+(8,'Sistem Komputer Expo','Expo','Pameran karya mahasiswa, talkshow industri, dan jejaring alumni.','Auditorium Kampus',NULL,'2026-11-12',1,'2026-10-28 09:10:17','2026-10-28 09:10:17'),
+(9,'Batas Open Recruitment','Pendaftaran','Kesempatan terakhir buat gabung angkatan 2026/2027.','Online',NULL,'2026-11-30',1,'2026-10-28 09:10:17','2026-10-28 09:10:17');
 /*!40000 ALTER TABLE `kegiatan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,7 +180,7 @@ CREATE TABLE `pengaturan` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `pengaturan_kunci_unique` (`kunci`)
-) ENGINE=InnoDB AUTO_INCREMENT=208 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,7 +204,8 @@ INSERT INTO `pengaturan` VALUES
 (188,'site_marquee','Ngoprek bareng, Bikin karya, Buka peluang, IIB Darmajaya, Sistem Komputer, Teknik Komputer','2026-10-28 08:46:21'),
 (189,'oprec_deadline','30 November 2026','2026-10-28 08:46:21'),
 (190,'oprec_link','/berita/open-recruitment-anggota-stekom-2026-2027','2026-10-28 08:46:21'),
-(191,'oprec_aktif','1','2026-10-28 08:46:21');
+(191,'oprec_aktif','1','2026-10-28 08:46:21'),
+(208,'site_short_name','STEKOM','2026-10-28 10:01:29');
 /*!40000 ALTER TABLE `pengaturan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,7 +230,7 @@ CREATE TABLE `pengurus` (
   UNIQUE KEY `pengurus_periode_nama_unique` (`periode`,`nama`),
   KEY `pengurus_divisi_id_index` (`divisi_id`),
   CONSTRAINT `pengurus_divisi_id_foreign` FOREIGN KEY (`divisi_id`) REFERENCES `divisi` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +249,10 @@ INSERT INTO `pengurus` VALUES
 (7,'Dimas Aryo','img/pengurus/dimas-aryo.svg','Koordinator Divisi',3,'2026/2027',7,1,'2026-10-26 05:48:40'),
 (8,'Rizky Maulana','img/pengurus/rizky-maulana.svg','Koordinator Divisi',4,'2026/2027',8,1,'2026-10-26 05:48:40'),
 (9,'Intan Permata','img/pengurus/intan-permata.svg','Koordinator Divisi',5,'2026/2027',9,1,'2026-10-26 05:48:40'),
-(10,'Yusuf Hidayat','img/pengurus/yusuf-hidayat.svg','Koordinator Divisi',6,'2026/2027',10,1,'2026-10-26 05:48:40');
+(10,'Yusuf Hidayat','img/pengurus/yusuf-hidayat.svg','Koordinator Divisi',6,'2026/2027',10,1,'2026-10-26 05:48:40'),
+(23,'Arif Budiman',NULL,'Ketua Umum',NULL,'2025/2026',1,1,'2026-10-29 02:11:42'),
+(24,'Dewi Lestari',NULL,'Sekretaris Umum',NULL,'2025/2026',2,1,'2026-10-29 02:11:42'),
+(25,'Budi Santoso',NULL,'Koordinator Divisi',NULL,'2025/2026',3,1,'2026-10-29 02:11:42');
 /*!40000 ALTER TABLE `pengurus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,7 +284,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,'Admin STEKOM','admin@stekom.id','$2y$12$AVE4/jjO9ZrIRJcpu96cOeskBYMw51aWDkazUpQXtuXB8qt/Hqx8W','admin','2026-10-26 12:02:16',1,'2026-10-28 12:23:14');
+(1,'Admin STEKOM','admin@stekom.id','$2y$12$AVE4/jjO9ZrIRJcpu96cOeskBYMw51aWDkazUpQXtuXB8qt/Hqx8W','admin','2026-10-26 12:02:16',1,'2026-10-29 07:24:48');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,4 +301,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-10-28 16:20:50
+-- Dump completed on 2026-10-29  9:31:38

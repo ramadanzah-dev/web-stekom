@@ -190,6 +190,40 @@ final class Berita
         return $statement->execute();
     }
 
+    /**
+     * @param array<int> $ids
+     * @return array<int, array<string, mixed>>
+     */
+    public function findMany(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        $pdo = Database::connection();
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $statement = $pdo->prepare($this->selectColumns() . " WHERE id IN ($placeholders)");
+        $statement->execute($ids);
+
+        return $statement->fetchAll();
+    }
+
+    /**
+     * @param array<int> $ids
+     */
+    public function deleteMany(array $ids): bool
+    {
+        if ($ids === []) {
+            return false;
+        }
+
+        $pdo = Database::connection();
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $statement = $pdo->prepare("DELETE FROM berita WHERE id IN ($placeholders)");
+
+        return $statement->execute($ids);
+    }
+
     public function count(): int
     {
         return (int) Database::connection()->query('SELECT COUNT(*) FROM berita')->fetchColumn();

@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 ?>
+<form method="post" action="<?= url('/admin/berita/bulk-delete') ?>" id="bulk-delete-form" data-confirm-title="Hapus berita terpilih?" data-confirm="Semua berita yang dipilih akan dihapus permanen. Tindakan ini tidak bisa dibatalkan." data-confirm-label="Hapus terpilih">
+    <?= csrf_field() ?>
+</form>
+
 <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
     <div>
         <p class="text-xs font-medium text-muted">Konten · <?= e((string) $total) ?> tulisan</p>
@@ -13,10 +17,22 @@ declare(strict_types=1);
         </p>
     </div>
 
-    <a href="<?= url('/admin/berita/create') ?>" class="press inline-flex shrink-0 items-center justify-between gap-5 self-start bg-cobalt px-5 py-3 text-sm font-bold text-bone transition hover:bg-ink sm:self-auto">
-        Tambah berita
-        <svg class="h-4 w-4" aria-hidden="true"><use href="#i-plus"/></svg>
-    </a>
+    <div class="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+        <button
+            type="submit"
+            form="bulk-delete-form"
+            id="bulk-delete-btn"
+            disabled
+            class="press inline-flex items-center gap-2 border border-red/30 bg-white px-4 py-3 text-sm font-bold text-red transition hover:bg-red hover:text-bone disabled:cursor-not-allowed disabled:opacity-40"
+        >
+            <svg class="h-4 w-4" aria-hidden="true"><use href="#i-trash"/></svg>
+            Hapus Terpilih <span data-bulk-count></span>
+        </button>
+        <a href="<?= url('/admin/berita/create') ?>" class="press inline-flex shrink-0 items-center justify-between gap-5 bg-cobalt px-5 py-3 text-sm font-bold text-bone transition hover:bg-ink">
+            Tambah berita
+            <svg class="h-4 w-4" aria-hidden="true"><use href="#i-plus"/></svg>
+        </a>
+    </div>
 </div>
 
 <form method="get" action="<?= url('/admin/berita') ?>" class="mt-7 flex gap-2">
@@ -55,11 +71,18 @@ declare(strict_types=1);
         </a>
     </div>
 <?php else: ?>
-    <div class="mt-6 overflow-hidden border border-ink/10 bg-white">
+    <div class="mt-6 overflow-hidden border border-ink/10 bg-white" data-bulk-table>
         <div class="divide-y divide-ink/10 md:hidden">
             <?php foreach ($items as $item): ?>
                 <?php $gambar = gambar_url($item['gambar'] ?? null); ?>
-                <article class="flex gap-3 px-4 py-4">
+                <article class="flex items-start gap-3 px-4 py-4">
+                    <input
+                        type="checkbox"
+                        name="ids[]"
+                        value="<?= $item['id'] ?>"
+                        aria-label="Pilih: <?= e($item['judul']) ?>"
+                        class="item-checkbox mt-1 h-4 w-4 rounded border-ink/30 text-cobalt focus:ring-cobalt/20"
+                    >
                     <span class="relative h-12 w-16 shrink-0 overflow-hidden bg-bone">
                         <?php if ($gambar !== null): ?>
                             <img src="<?= e($gambar) ?>" alt="" loading="lazy" class="h-full w-full object-cover">
@@ -96,6 +119,14 @@ declare(strict_types=1);
             <table class="w-full text-left">
                 <thead>
                     <tr class="border-b border-ink/10">
+                        <th scope="col" class="w-12 px-5 py-3">
+                            <input
+                                type="checkbox"
+                                data-select-all
+                                aria-label="Pilih semua berita"
+                                class="h-4 w-4 rounded border-ink/30 text-cobalt focus:ring-cobalt/20"
+                            >
+                        </th>
                         <th scope="col" class="px-5 py-3 text-xs font-semibold text-muted">Berita</th>
                         <th scope="col" class="hidden px-4 py-3 text-xs font-semibold text-muted md:table-cell">Kategori</th>
                         <th scope="col" class="hidden px-4 py-3 text-xs font-semibold text-muted xl:table-cell">Terbit</th>
@@ -106,6 +137,15 @@ declare(strict_types=1);
                     <?php foreach ($items as $item): ?>
                         <?php $gambar = gambar_url($item['gambar'] ?? null); ?>
                         <tr class="transition hover:bg-bone">
+                            <td class="w-12 px-5 py-4">
+                                <input
+                                    type="checkbox"
+                                    name="ids[]"
+                                    value="<?= $item['id'] ?>"
+                                    aria-label="Pilih: <?= e($item['judul']) ?>"
+                                    class="item-checkbox h-4 w-4 rounded border-ink/30 text-cobalt focus:ring-cobalt/20"
+                                >
+                            </td>
                             <td class="px-5 py-4">
                                 <div class="flex items-center gap-3">
                                     <span class="relative h-12 w-16 shrink-0 overflow-hidden bg-bone">

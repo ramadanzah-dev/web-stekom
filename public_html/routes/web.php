@@ -32,6 +32,7 @@ $router->get('/admin', [AdminDashboardController::class, 'index']);
 $router->get('/admin/berita', [AdminBeritaController::class, 'index']);
 $router->get('/admin/berita/create', [AdminBeritaController::class, 'create']);
 $router->post('/admin/berita', [AdminBeritaController::class, 'store']);
+$router->post('/admin/berita/bulk-delete', [AdminBeritaController::class, 'bulkDestroy']);
 $router->get('/admin/berita/{id}/edit', [AdminBeritaController::class, 'edit']);
 $router->post('/admin/berita/{id}', [AdminBeritaController::class, 'update']);
 $router->post('/admin/berita/{id}/delete', [AdminBeritaController::class, 'destroy']);
@@ -40,6 +41,7 @@ $router->post('/admin/berita/{id}/delete', [AdminBeritaController::class, 'destr
 $router->get('/admin/pengurus', [AdminPengurusController::class, 'index']);
 $router->get('/admin/pengurus/create', [AdminPengurusController::class, 'create']);
 $router->post('/admin/pengurus', [AdminPengurusController::class, 'store']);
+$router->post('/admin/pengurus/bulk-delete', [AdminPengurusController::class, 'bulkDestroy']);
 $router->get('/admin/pengurus/{id}/edit', [AdminPengurusController::class, 'edit']);
 $router->post('/admin/pengurus/{id}', [AdminPengurusController::class, 'update']);
 $router->post('/admin/pengurus/{id}/delete', [AdminPengurusController::class, 'destroy']);
@@ -48,6 +50,7 @@ $router->post('/admin/pengurus/{id}/delete', [AdminPengurusController::class, 'd
 $router->get('/admin/divisi', [AdminDivisiController::class, 'index']);
 $router->get('/admin/divisi/create', [AdminDivisiController::class, 'create']);
 $router->post('/admin/divisi', [AdminDivisiController::class, 'store']);
+$router->post('/admin/divisi/bulk-delete', [AdminDivisiController::class, 'bulkDestroy']);
 $router->get('/admin/divisi/{id}/edit', [AdminDivisiController::class, 'edit']);
 $router->post('/admin/divisi/{id}', [AdminDivisiController::class, 'update']);
 $router->post('/admin/divisi/{id}/delete', [AdminDivisiController::class, 'destroy']);
@@ -61,6 +64,7 @@ $router->post('/admin/pengaturan/reset', [AdminPengaturanController::class, 'res
 $router->get('/admin/kegiatan', [AdminKegiatanController::class, 'index']);
 $router->get('/admin/kegiatan/tambah', [AdminKegiatanController::class, 'create']);
 $router->post('/admin/kegiatan/tambah', [AdminKegiatanController::class, 'store']);
+$router->post('/admin/kegiatan/bulk-delete', [AdminKegiatanController::class, 'bulkDestroy']);
 $router->get('/admin/kegiatan/{id}/edit', [AdminKegiatanController::class, 'edit']);
 $router->post('/admin/kegiatan/{id}/edit', [AdminKegiatanController::class, 'update']);
 $router->post('/admin/kegiatan/{id}/hapus', [AdminKegiatanController::class, 'destroy']);

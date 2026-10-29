@@ -234,4 +234,65 @@
             window.setTimeout(() => flash.remove(), 320);
         }, 6000);
     });
+
+    // Bulk select & delete handling for admin CRUD tables
+    document.querySelectorAll('[data-bulk-table]').forEach((container) => {
+        const selectAll = container.querySelector('[data-select-all]');
+        const checkboxes = container.querySelectorAll('.item-checkbox');
+        const bulkBtn = document.getElementById(container.getAttribute('data-bulk-btn') || 'bulk-delete-btn');
+
+        const updateBulkState = () => {
+            const checkedCount = Array.from(checkboxes).filter((cb) => cb.checked).length;
+            if (bulkBtn) {
+                bulkBtn.disabled = checkedCount === 0;
+                const countSpan = bulkBtn.querySelector('[data-bulk-count]');
+                if (countSpan) {
+                    countSpan.textContent = checkedCount > 0 ? `(${checkedCount})` : '';
+                }
+            }
+            if (selectAll) {
+                selectAll.checked = checkedCount > 0 && checkedCount === checkboxes.length;
+                selectAll.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+            }
+        };
+
+        if (selectAll) {
+            selectAll.addEventListener('change', () => {
+                checkboxes.forEach((cb) => {
+                    cb.checked = selectAll.checked;
+                });
+                updateBulkState();
+            });
+        }
+
+        checkboxes.forEach((cb) => {
+            cb.addEventListener('change', updateBulkState);
+        });
+
+        updateBulkState();
+    });
+
+    // Populate bulk delete form with checked item IDs before submit
+    document.querySelectorAll('form[action*="bulk-delete"]').forEach((form) => {
+        form.addEventListener('submit', (event) => {
+            console.log('Bulk delete form submitted:', form.action);
+            form.querySelectorAll('input[name="ids[]"]').forEach((el) => el.remove());
+
+            const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
+            if (checkedBoxes.length === 0) {
+                console.log('No items selected');
+                event.preventDefault();
+                return;
+            }
+
+            checkedBoxes.forEach((cb) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'ids[]';
+                input.value = cb.value;
+                form.appendChild(input);
+            });
+            console.log('Added ids:', checkedBoxes.length);
+        });
+    });
 })();
