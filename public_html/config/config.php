@@ -14,7 +14,7 @@ return [
     'site' => [
         'name' => 'STEKOM',
         'full_name' => 'Himpunan Mahasiswa Sistem Komputer',
-        'short_name' => 'HIMASI',
+        'short_name' => 'STEKOM',
         'tagline' => 'Ruang tumbuh mahasiswa Sistem Komputer.',
         'description' => 'STEKOM adalah himpunan mahasiswa Sistem Komputer: wadah kolaborasi, karya, dan pengembangan diri di bidang teknologi.',
         'periode' => '2026/2027',

@@ -1,9 +1,9 @@
 /*M!999999\- enable the sandbox mode */ 
--- MariaDB dump 10.19-11.8.6-MariaDB, for debian-linux-gnu (aarch64)
+-- MariaDB dump 10.19  Distrib 10.11.14-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: stekom
 -- ------------------------------------------------------
--- Server version	11.8.6-MariaDB-0+deb13u1 from Debian
+-- Server version	10.11.14-MariaDB-0ubuntu0.24.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,7 +14,7 @@
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
 -- Table structure for table `anggota`
@@ -43,13 +43,10 @@ CREATE TABLE `anggota` (
 -- Dumping data for table `anggota`
 --
 
-SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `anggota` WRITE;
 /*!40000 ALTER TABLE `anggota` DISABLE KEYS */;
 /*!40000 ALTER TABLE `anggota` ENABLE KEYS */;
 UNLOCK TABLES;
-COMMIT;
-SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `berita`
@@ -80,7 +77,6 @@ CREATE TABLE `berita` (
 -- Dumping data for table `berita`
 --
 
-SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `berita` WRITE;
 /*!40000 ALTER TABLE `berita` DISABLE KEYS */;
 INSERT INTO `berita` VALUES
@@ -92,8 +88,6 @@ INSERT INTO `berita` VALUES
 (6,'Menyusun Peta Belajar Sistem Komputer Bersama Alumni','menyusun-peta-belajar-sistem-komputer','img/berita/menyusun-peta-belajar-sistem-komputer.svg','Teknologi','Sesi diskusi bersama alumni menghasilkan peta belajar yang lebih terarah untuk mahasiswa baru Sistem Komputer.','Apa saja yang sebaiknya dipelajari lebih dulu di Sistem Komputer? Pertanyaan itu menjadi titik awal diskusi STEKOM bersama sejumlah alumni pada akhir pekan lalu.\n\nDiskusi menghasilkan peta belajar yang dibagi ke dalam beberapa fase: dasar pemrograman, pemahaman sistem, penguatan proyek, dan persiapan karier. Setiap fase dilengkapi rekomendasi topik dan proyek kecil untuk latihan.\n\nAlumni menekankan pentingnya keseimbangan antara fondasi teori dan kebiasaan membangun. Menurut mereka, portofolio yang tumbuh dari proyek nyata lebih meyakinkan daripada daftar sertifikat yang panjang.\n\nRingkasan peta belajar akan dibagikan kepada anggota dan diperbarui secara berkala bersama divisi terkait.','Divisi Web & Product','2026-08-30 10:00:00','2026-10-26 05:48:40','2026-10-26 06:13:55');
 /*!40000 ALTER TABLE `berita` ENABLE KEYS */;
 UNLOCK TABLES;
-COMMIT;
-SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `divisi`
@@ -105,6 +99,7 @@ DROP TABLE IF EXISTS `divisi`;
 CREATE TABLE `divisi` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `nama` varchar(100) NOT NULL,
+  `tagline` varchar(255) DEFAULT NULL,
   `slug` varchar(100) NOT NULL,
   `deskripsi` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -117,20 +112,17 @@ CREATE TABLE `divisi` (
 -- Dumping data for table `divisi`
 --
 
-SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `divisi` WRITE;
 /*!40000 ALTER TABLE `divisi` DISABLE KEYS */;
 INSERT INTO `divisi` VALUES
-(1,'Web & Product','web-product','Membangun produk digital dari riset, desain, sampai deploy.','2026-10-26 05:48:40'),
-(2,'Mobile & UI/UX','mobile-ui-ux','Merancang pengalaman digital di layar kecil maupun besar.','2026-10-26 05:48:40'),
-(3,'Data & AI','data-ai','Mengolah data menjadi insight, model, dan keputusan.','2026-10-26 05:48:40'),
-(4,'Keamanan Siber','keamanan-siber','Pertahanan sistem, etika hacking, dan budaya aman digital.','2026-10-26 05:48:40'),
-(5,'Embedded & IoT','embedded-iot','Menghubungkan perangkat fisik dengan kode dan sensor.','2026-10-26 05:48:40'),
-(6,'Media & Komunikasi','media-komunikasi','Menceritakan karya himpunan lewat desain, foto, dan konten.','2026-10-26 05:48:40');
+(1,'Web & Product','Bikin web & produk digital','web-product','Membangun produk digital dari riset, desain, sampai deploy.','2026-10-26 05:48:40'),
+(2,'Mobile & UI/UX','Rancang aplikasi & antarmuka','mobile-ui-ux','Merancang pengalaman digital di layar kecil maupun besar.','2026-10-26 05:48:40'),
+(3,'Data & AI','Ubah data jadi keputusan','data-ai','Mengolah data menjadi insight, model, dan keputusan.','2026-10-26 05:48:40'),
+(4,'Keamanan Siber','Amankan sistem & jaringan','keamanan-siber','Pertahanan sistem, etika hacking, dan budaya aman digital.','2026-10-26 05:48:40'),
+(5,'Embedded & IoT','Rakit perangkat & sensor','embedded-iot','Menghubungkan perangkat fisik dengan kode dan sensor.','2026-10-26 05:48:40'),
+(6,'Media & Komunikasi','Bikin konten & cerita','media-komunikasi','Menceritakan karya himpunan lewat desain, foto, dan konten.','2026-10-26 05:48:40');
 /*!40000 ALTER TABLE `divisi` ENABLE KEYS */;
 UNLOCK TABLES;
-COMMIT;
-SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `kegiatan`
@@ -141,32 +133,37 @@ DROP TABLE IF EXISTS `kegiatan`;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `kegiatan` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `divisi_id` tinyint(3) unsigned DEFAULT NULL,
   `judul` varchar(150) NOT NULL,
-  `slug` varchar(160) NOT NULL,
+  `kategori` varchar(50) NOT NULL DEFAULT 'Agenda',
   `deskripsi` text DEFAULT NULL,
   `lokasi` varchar(150) DEFAULT NULL,
-  `mulai_pada` datetime DEFAULT NULL,
-  `selesai_pada` datetime DEFAULT NULL,
+  `tanggal_mulai` date NOT NULL,
+  `aktif` tinyint(1) unsigned NOT NULL DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `kegiatan_slug_unique` (`slug`),
-  KEY `kegiatan_divisi_id_index` (`divisi_id`),
-  CONSTRAINT `kegiatan_divisi_id_foreign` FOREIGN KEY (`divisi_id`) REFERENCES `divisi` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `idx_kegiatan_tanggal` (`tanggal_mulai`,`aktif`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `kegiatan`
 --
 
-SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `kegiatan` WRITE;
 /*!40000 ALTER TABLE `kegiatan` DISABLE KEYS */;
+INSERT INTO `kegiatan` VALUES
+(1,'Workshop Embedded','Workshop','Dari sensor ke dashboard: praktik langsung merakit perangkat IoT.','Lab Hardware','2026-11-08',1,'2026-10-28 08:47:24','2026-10-28 08:47:24'),
+(2,'Sistem Komputer Expo','Expo','Pameran karya mahasiswa, talkshow industri, dan jejaring alumni.','Auditorium Kampus','2026-11-12',1,'2026-10-28 08:47:24','2026-10-28 08:47:24'),
+(3,'Batas Open Recruitment','Pendaftaran','Kesempatan terakhir buat gabung angkatan 2026/2027.','Online','2026-11-30',1,'2026-10-28 08:47:24','2026-10-28 08:47:24'),
+(4,'Workshop Embedded','Workshop','Dari sensor ke dashboard: praktik langsung merakit perangkat IoT.','Lab Hardware','2026-11-08',1,'2026-10-28 09:09:46','2026-10-28 09:09:46'),
+(5,'Sistem Komputer Expo','Expo','Pameran karya mahasiswa, talkshow industri, dan jejaring alumni.','Auditorium Kampus','2026-11-12',1,'2026-10-28 09:09:46','2026-10-28 09:09:46'),
+(6,'Batas Open Recruitment','Pendaftaran','Kesempatan terakhir buat gabung angkatan 2026/2027.','Online','2026-11-30',1,'2026-10-28 09:09:46','2026-10-28 09:09:46'),
+(7,'Workshop Embedded','Workshop','Dari sensor ke dashboard: praktik langsung merakit perangkat IoT.','Lab Hardware','2026-11-08',1,'2026-10-28 09:10:17','2026-10-28 09:10:17'),
+(8,'Sistem Komputer Expo','Expo','Pameran karya mahasiswa, talkshow industri, dan jejaring alumni.','Auditorium Kampus','2026-11-12',1,'2026-10-28 09:10:17','2026-10-28 09:10:17'),
+(9,'Batas Open Recruitment','Pendaftaran','Kesempatan terakhir buat gabung angkatan 2026/2027.','Online','2026-11-30',1,'2026-10-28 09:10:17','2026-10-28 09:10:17');
 /*!40000 ALTER TABLE `kegiatan` ENABLE KEYS */;
 UNLOCK TABLES;
-COMMIT;
-SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `pengaturan`
@@ -182,14 +179,13 @@ CREATE TABLE `pengaturan` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `pengaturan_kunci_unique` (`kunci`)
-) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=208 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `pengaturan`
 --
 
-SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `pengaturan` WRITE;
 /*!40000 ALTER TABLE `pengaturan` DISABLE KEYS */;
 INSERT INTO `pengaturan` VALUES
@@ -203,11 +199,13 @@ INSERT INTO `pengaturan` VALUES
 (107,'site_location','Kampus Sistem Komputer','2026-10-26 15:04:19'),
 (108,'site_logo','uploads/pengaturan/2439b9fb8b43e4972d5ed8b5.png','2026-10-26 15:28:23'),
 (109,'site_footer_text','Belajar, berkarya, dan bertumbuh bersama.','2026-10-26 13:53:24'),
-(110,'site_footer_note','Ramadanzah','2026-10-26 15:28:50');
+(110,'site_footer_note','Ramadanzah','2026-10-26 15:28:50'),
+(188,'site_marquee','Ngoprek bareng, Bikin karya, Buka peluang, IIB Darmajaya, Sistem Komputer, Teknik Komputer','2026-10-28 08:46:21'),
+(189,'oprec_deadline','30 November 2026','2026-10-28 08:46:21'),
+(190,'oprec_link','/berita/open-recruitment-anggota-stekom-2026-2027','2026-10-28 08:46:21'),
+(191,'oprec_aktif','1','2026-10-28 08:46:21');
 /*!40000 ALTER TABLE `pengaturan` ENABLE KEYS */;
 UNLOCK TABLES;
-COMMIT;
-SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `pengurus`
@@ -237,7 +235,6 @@ CREATE TABLE `pengurus` (
 -- Dumping data for table `pengurus`
 --
 
-SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `pengurus` WRITE;
 /*!40000 ALTER TABLE `pengurus` DISABLE KEYS */;
 INSERT INTO `pengurus` VALUES
@@ -253,8 +250,6 @@ INSERT INTO `pengurus` VALUES
 (10,'Yusuf Hidayat','img/pengurus/yusuf-hidayat.svg','Koordinator Divisi',6,'2026/2027',10,1,'2026-10-26 05:48:40');
 /*!40000 ALTER TABLE `pengurus` ENABLE KEYS */;
 UNLOCK TABLES;
-COMMIT;
-SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `users`
@@ -281,15 +276,16 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,'Admin STEKOM','admin@stekom.id','$2y$12$AVE4/jjO9ZrIRJcpu96cOeskBYMw51aWDkazUpQXtuXB8qt/Hqx8W','admin','2026-10-26 12:02:16',1,'2026-10-26 23:44:15');
+(1,'Admin STEKOM','admin@stekom.id','$2y$12$AVE4/jjO9ZrIRJcpu96cOeskBYMw51aWDkazUpQXtuXB8qt/Hqx8W','admin','2026-10-26 12:02:16',1,'2026-10-28 12:23:14');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-COMMIT;
-SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+
+--
+-- Dumping routines for database 'stekom'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -298,6 +294,6 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-10-28  0:19:36
+-- Dump completed on 2026-10-28 16:20:50

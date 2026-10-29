@@ -51,24 +51,21 @@ $borderClass = static fn (string $key): string => $fieldError($key) ? 'border-re
 
             <div class="mt-4">
                 <label for="jabatan" class="block text-[13px] font-semibold text-ink">Jabatan <span class="text-red">*</span></label>
-                <input
-                    type="text"
+                <?php $currentJabatan = (string) ($pengurus['jabatan'] ?? ''); ?>
+                <select
                     id="jabatan"
                     name="jabatan"
-                    value="<?= e((string) ($pengurus['jabatan'] ?? '')) ?>"
                     required
-                    maxlength="80"
-                    list="jabatan-list"
                     class="<?= e($inputClass . ' ' . $borderClass('jabatan')) ?>"
-                    placeholder="Ketua Umum, Koordinator Divisi…"
                 >
-                <datalist id="jabatan-list">
-                    <option value="Ketua Umum"></option>
-                    <option value="Wakil Ketua Umum"></option>
-                    <option value="Sekretaris Umum"></option>
-                    <option value="Bendahara Umum"></option>
-                    <option value="Koordinator Divisi"></option>
-                </datalist>
+                    <option value="">— Pilih Jabatan —</option>
+                    <option value="Ketua Umum" <?= $currentJabatan === 'Ketua Umum' ? 'selected' : '' ?>>Ketua Umum</option>
+                    <option value="Wakil Ketua Umum" <?= $currentJabatan === 'Wakil Ketua Umum' ? 'selected' : '' ?>>Wakil Ketua Umum</option>
+                    <option value="Sekretaris Umum" <?= $currentJabatan === 'Sekretaris Umum' ? 'selected' : '' ?>>Sekretaris Umum</option>
+                    <option value="Bendahara Umum" <?= $currentJabatan === 'Bendahara Umum' ? 'selected' : '' ?>>Bendahara Umum</option>
+                    <option value="Koordinator Divisi" <?= $currentJabatan === 'Koordinator Divisi' ? 'selected' : '' ?>>Koordinator Divisi</option>
+                    <option value="Anggota" <?= $currentJabatan === 'Anggota' ? 'selected' : '' ?>>Anggota</option>
+                </select>
                 <?php if ($fieldError('jabatan')): ?>
                     <p class="mt-1.5 text-xs font-medium text-red"><?= e($errors['jabatan']) ?></p>
                 <?php endif; ?>

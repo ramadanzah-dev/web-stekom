@@ -113,6 +113,75 @@ $borderClass = static fn (string $key): string => $fieldError($key) ? 'border-re
         </div>
 
         <div class="border border-ink/10 bg-white p-6">
+            <h2 class="font-display text-lg font-bold tracking-[-0.02em]">Beranda &amp; Open Recruitment</h2>
+
+            <div class="mt-5">
+                <label for="site_marquee" class="block text-[13px] font-semibold text-ink">Teks Marquee Beranda</label>
+                <input
+                    type="text"
+                    id="site_marquee"
+                    name="site_marquee"
+                    value="<?= e($values['site_marquee'] ?? '') ?>"
+                    maxlength="300"
+                    class="<?= e($inputClass . ' ' . $borderClass('site_marquee')) ?>"
+                    placeholder="Ngoprek bareng, Bikin karya, ..."
+                >
+                <p class="mt-1.5 text-xs text-muted">Pisahkan dengan koma (,).</p>
+                <?php if ($fieldError('site_marquee')): ?>
+                    <p class="mt-1.5 text-xs font-medium text-red"><?= e($errors['site_marquee']) ?></p>
+                <?php endif; ?>
+            </div>
+
+            <div class="mt-5 grid gap-5 sm:grid-cols-2">
+                <div>
+                    <label for="oprec_deadline" class="block text-[13px] font-semibold text-ink">Batas Deadline Oprec</label>
+                    <input
+                        type="text"
+                        id="oprec_deadline"
+                        name="oprec_deadline"
+                        value="<?= e($values['oprec_deadline'] ?? '') ?>"
+                        maxlength="60"
+                        class="<?= e($inputClass . ' ' . $borderClass('oprec_deadline')) ?>"
+                        placeholder="30 November 2026"
+                    >
+                    <?php if ($fieldError('oprec_deadline')): ?>
+                        <p class="mt-1.5 text-xs font-medium text-red"><?= e($errors['oprec_deadline']) ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div>
+                    <label for="oprec_link" class="block text-[13px] font-semibold text-ink">Link Oprec / URL</label>
+                    <input
+                        type="text"
+                        id="oprec_link"
+                        name="oprec_link"
+                        value="<?= e($values['oprec_link'] ?? '') ?>"
+                        maxlength="200"
+                        class="<?= e($inputClass . ' ' . $borderClass('oprec_link')) ?>"
+                        placeholder="/berita/open-recruitment-..."
+                    >
+                    <?php if ($fieldError('oprec_link')): ?>
+                        <p class="mt-1.5 text-xs font-medium text-red"><?= e($errors['oprec_link']) ?></p>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <input
+                        type="checkbox"
+                        name="oprec_aktif"
+                        value="1"
+                        <?= !empty($values['oprec_aktif']) && $values['oprec_aktif'] === '1' ? 'checked' : '' ?>
+                        class="h-4 w-4 rounded border-ink/20 text-cobalt focus:ring-cobalt"
+                    >
+                    <span class="text-[13px] font-semibold text-ink">Aktifkan Banner &amp; Status Open Recruitment</span>
+                </label>
+                <p class="mt-1.5 text-xs text-muted">Jika dimatikan, banner CTA pendaftaran di beranda akan disembunyikan.</p>
+            </div>
+        </div>
+
+        <div class="border border-ink/10 bg-white p-6">
             <h2 class="font-display text-lg font-bold tracking-[-0.02em]">Footer</h2>
 
             <div class="mt-5">

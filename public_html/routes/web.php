@@ -6,6 +6,7 @@ use App\Controllers\Admin\AdminAuthController;
 use App\Controllers\Admin\AdminBeritaController;
 use App\Controllers\Admin\AdminDashboardController;
 use App\Controllers\Admin\AdminDivisiController;
+use App\Controllers\Admin\AdminKegiatanController;
 use App\Controllers\Admin\AdminPengaturanController;
 use App\Controllers\Admin\AdminPengurusController;
 use App\Controllers\BeritaController;
@@ -55,3 +56,11 @@ $router->post('/admin/divisi/{id}/delete', [AdminDivisiController::class, 'destr
 $router->get('/admin/pengaturan', [AdminPengaturanController::class, 'index']);
 $router->post('/admin/pengaturan', [AdminPengaturanController::class, 'update']);
 $router->post('/admin/pengaturan/reset', [AdminPengaturanController::class, 'reset']);
+
+// CRUD kegiatan.
+$router->get('/admin/kegiatan', [AdminKegiatanController::class, 'index']);
+$router->get('/admin/kegiatan/tambah', [AdminKegiatanController::class, 'create']);
+$router->post('/admin/kegiatan/tambah', [AdminKegiatanController::class, 'store']);
+$router->get('/admin/kegiatan/{id}/edit', [AdminKegiatanController::class, 'edit']);
+$router->post('/admin/kegiatan/{id}/edit', [AdminKegiatanController::class, 'update']);
+$router->post('/admin/kegiatan/{id}/hapus', [AdminKegiatanController::class, 'destroy']);

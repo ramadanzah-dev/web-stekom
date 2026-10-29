@@ -144,6 +144,15 @@ final class AdminPengurusController extends BaseAdminController
         $urutanInput = trim((string) ($input['urutan'] ?? '0'));
         $aktif = isset($input['aktif']) ? 1 : 0;
 
+        $allowedJabatans = [
+            'Ketua Umum',
+            'Wakil Ketua Umum',
+            'Sekretaris Umum',
+            'Bendahara Umum',
+            'Koordinator Divisi',
+            'Anggota',
+        ];
+
         if ($nama === '') {
             $errors['nama'] = 'Nama wajib diisi.';
         } elseif (mb_strlen($nama) > 100) {
@@ -152,8 +161,8 @@ final class AdminPengurusController extends BaseAdminController
 
         if ($jabatan === '') {
             $errors['jabatan'] = 'Jabatan wajib diisi.';
-        } elseif (mb_strlen($jabatan) > 80) {
-            $errors['jabatan'] = 'Jabatan maksimal 80 karakter.';
+        } elseif (!in_array($jabatan, $allowedJabatans, true)) {
+            $errors['jabatan'] = 'Jabatan yang dipilih tidak valid.';
         }
 
         if ($periode === '') {

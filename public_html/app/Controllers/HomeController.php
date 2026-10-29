@@ -7,6 +7,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\Berita;
 use App\Models\Divisi;
+use App\Models\Kegiatan;
 use App\Models\Pengurus;
 
 final class HomeController extends Controller
@@ -16,22 +17,53 @@ final class HomeController extends Controller
         $berita = new Berita();
         $divisi = new Divisi();
         $pengurus = new Pengurus();
+        $kegiatanModel = new Kegiatan();
 
         $daftarDivisi = $divisi->withKoordinator((string) config('site.periode'));
-        $minat = [
-            'web-product' => 'Bikin web & produk digital',
-            'mobile-ui-ux' => 'Rancang aplikasi & antarmuka',
-            'data-ai' => 'Ubah data jadi keputusan',
-            'keamanan-siber' => 'Amankan sistem & jaringan',
-            'embedded-iot' => 'Rakit perangkat & sensor',
-            'media-komunikasi' => 'Bikin konten & cerita',
-        ];
 
         foreach ($daftarDivisi as $index => $item) {
-            $daftarDivisi[$index]['minat'] = $minat[$item['slug']] ?? ('Coba ' . $item['nama']);
+            $daftarDivisi[$index]['minat'] = trim((string) ($item['tagline'] ?? '')) !== '' 
+                ? $item['tagline'] 
+                : ('Coba ' . $item['nama']);
         }
 
         $core = $pengurus->core((string) config('site.periode'));
+
+        $rawMarquee = (string) config('site_marquee', 'Ngoprek bareng, Bikin karya, Buka peluang, IIB Darmajaya, Sistem Komputer, Teknik Komputer');
+        $marquee = array_filter(array_map('trim', explode(',', $rawMarquee)));
+        if ($marquee === []) {
+            $marquee = ['Ngoprek bareng', 'Bikin karya', 'Buka peluang'];
+        }
+
+        $rawKegiatan = $kegiatanModel->upcoming(10);
+        $kegiatanList = [];
+
+        foreach ($rawKegiatan as $item) {
+            $timestamp = strtotime((string) $item['tanggal_mulai']);
+            $kegiatanList[] = [
+                'datetime' => (string) $item['tanggal_mulai'],
+                'day' => $timestamp !== false ? date('d', $timestamp) : '01',
+                'month' => $timestamp !== false ? date('M', $timestamp) : 'Nov',
+                'category' => (string) ($item['kategori'] ?? 'Agenda'),
+                'title' => (string) $item['judul'],
+                'description' => (string) ($item['deskripsi'] ?? ''),
+                'location' => (string) ($item['lokasi'] ?? ''),
+            ];
+        }
+
+        if ($kegiatanList === []) {
+            $kegiatanList = [
+                [
+                    'datetime' => date('Y-m-d'),
+                    'day' => date('d'),
+                    'month' => date('M'),
+                    'category' => 'Agenda',
+                    'title' => 'Belum ada agenda terdekat',
+                    'description' => 'Pantau terus kabar dan kegiatan terbaru dari HIMA Sistem Komputer.',
+                    'location' => 'Kampus',
+                ]
+            ];
+        }
 
         $this->view('pages/home/index', [
             'title' => null,
@@ -46,43 +78,8 @@ final class HomeController extends Controller
                 ['value' => (string) $berita->count(), 'label' => 'Kabar terbit'],
                 ['value' => (string) config('site.periode'), 'label' => 'Periode berjalan'],
             ],
-            'kegiatan' => [
-                [
-                    'datetime' => '2026-11-08',
-                    'day' => '08',
-                    'month' => 'Nov',
-                    'category' => 'Workshop',
-                    'title' => 'Workshop Embedded',
-                    'description' => 'Dari sensor ke dashboard: praktik langsung merakit perangkat IoT.',
-                    'location' => 'Lab Hardware',
-                ],
-                [
-                    'datetime' => '2026-11-12',
-                    'day' => '12',
-                    'month' => 'Nov',
-                    'category' => 'Expo',
-                    'title' => 'Sistem Komputer Expo',
-                    'description' => 'Pameran karya mahasiswa, talkshow industri, dan jejaring alumni.',
-                    'location' => 'Auditorium Kampus',
-                ],
-                [
-                    'datetime' => '2026-11-30',
-                    'day' => '30',
-                    'month' => 'Nov',
-                    'category' => 'Pendaftaran',
-                    'title' => 'Batas Open Recruitment',
-                    'description' => 'Kesempatan terakhir buat gabung angkatan 2026/2027.',
-                    'location' => 'Online',
-                ],
-            ],
-            'marquee' => [
-                'Ngoprek bareng',
-                'Bikin karya',
-                'Buka peluang',
-                'IIB Darmajaya',
-                'Sistem Komputer',
-                'Teknik Komputer',
-            ],
+            'kegiatan' => $kegiatanList,
+            'marquee' => array_values($marquee),
         ]);
     }
 }

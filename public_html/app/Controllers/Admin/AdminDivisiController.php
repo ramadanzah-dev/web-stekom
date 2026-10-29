@@ -21,6 +21,7 @@ final class AdminDivisiController extends BaseAdminController
         $this->adminView('divisi/form', $this->formData(null, [
             'nama' => '',
             'slug' => '',
+            'tagline' => '',
             'deskripsi' => '',
         ]));
     }
@@ -96,7 +97,7 @@ final class AdminDivisiController extends BaseAdminController
 
     /**
      * @param array<string, mixed> $input
-     * @return array{0: array{nama: string, slug: string, deskripsi: string}, 1: array<string, string>}
+     * @return array{0: array{nama: string, slug: string, tagline: string, deskripsi: string}, 1: array<string, string>}
      */
     private function validated(array $input, ?int $ignoreId): array
     {
@@ -104,12 +105,17 @@ final class AdminDivisiController extends BaseAdminController
 
         $nama = trim((string) ($input['nama'] ?? ''));
         $slugInput = trim((string) ($input['slug'] ?? ''));
+        $tagline = trim((string) ($input['tagline'] ?? ''));
         $deskripsi = trim((string) ($input['deskripsi'] ?? ''));
 
         if ($nama === '') {
             $errors['nama'] = 'Nama divisi wajib diisi.';
         } elseif (mb_strlen($nama) > 100) {
             $errors['nama'] = 'Nama divisi maksimal 100 karakter.';
+        }
+
+        if (mb_strlen($tagline) > 255) {
+            $errors['tagline'] = 'Tagline maksimal 255 karakter.';
         }
 
         if ($deskripsi === '') {
@@ -123,6 +129,7 @@ final class AdminDivisiController extends BaseAdminController
             [
                 'nama' => $nama,
                 'slug' => (new Divisi())->uniqueSlug($baseSlug, $ignoreId),
+                'tagline' => $tagline,
                 'deskripsi' => $deskripsi,
             ],
             $errors,
@@ -137,6 +144,7 @@ final class AdminDivisiController extends BaseAdminController
         return [
             'nama' => $this->input('nama'),
             'slug' => $this->input('slug'),
+            'tagline' => $this->input('tagline'),
             'deskripsi' => $this->input('deskripsi'),
         ];
     }

@@ -59,7 +59,7 @@ $ogImage = $ogImage ?? asset('img/found/macro-circuit-board.jpg');
             },
         };
     </script>
-    <link rel="stylesheet" href="<?= asset('css/custom.css') ?>">
+    <link rel="stylesheet" href="<?= asset('css/custom.css') ?>?v=<?= filemtime(BASE_PATH . '/public_html/css/custom.css') ?>">
 </head>
 <body class="<?= e($bodyClass) ?>">
     <div id="atas" aria-hidden="true"></div>

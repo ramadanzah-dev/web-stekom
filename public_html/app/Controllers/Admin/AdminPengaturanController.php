@@ -26,6 +26,10 @@ final class AdminPengaturanController extends BaseAdminController
         'site_location' => 120,
         'site_footer_text' => 240,
         'site_footer_note' => 160,
+        'site_marquee' => 300,
+        'oprec_deadline' => 60,
+        'oprec_link' => 200,
+        'oprec_aktif' => 10,
     ];
 
     public function index(): void
@@ -115,6 +119,11 @@ final class AdminPengaturanController extends BaseAdminController
         $errors = [];
 
         foreach (self::TEXT_FIELDS as $key => $maxLength) {
+            if ($key === 'oprec_aktif') {
+                $data[$key] = isset($input[$key]) && $input[$key] === '1' ? '1' : '0';
+                continue;
+            }
+
             $value = trim((string) ($input[$key] ?? ''));
             $data[$key] = $value;
 

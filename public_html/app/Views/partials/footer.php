@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 $logo = gambar_url($site['logo'] ?? null);
-$gabungUrl = url('/berita/open-recruitment-anggota-stekom-2026-2027');
+$oprecAktif = (bool) config('oprec_aktif', false);
+$gabungUrl = $oprecAktif ? url((string) config('oprec_link', '/berita')) : null;
 
 $footerLinks = [
     'Beranda' => url('/'),
@@ -48,55 +49,44 @@ $photoCredits = [
     ],
     [
         'title' => 'Arduino Micro',
-        'creator' => 'Geek3',
-        'license' => 'CC BY-SA 3.0',
-        'licenseUrl' => 'https://creativecommons.org/licenses/by-sa/3.0',
+        'creator' => 'Xosema',
+        'license' => 'CC BY-SA 4.0',
+        'licenseUrl' => 'https://creativecommons.org/licenses/by-sa/4.0',
         'source' => 'Wikimedia Commons',
         'sourceUrl' => 'https://commons.wikimedia.org/wiki/File:Arduino_Micro.jpg',
     ],
-    [
-        'title' => 'COMPUTER LABS',
-        'creator' => 'Mailane vanesa',
-        'license' => 'CC0',
-        'licenseUrl' => 'https://creativecommons.org/publicdomain/zero/1.0/deed.en',
-        'source' => 'Wikimedia Commons',
-        'sourceUrl' => 'https://commons.wikimedia.org/wiki/File:COMPUTER_LABS.jpg',
-    ],
 ];
 ?>
-<footer class="bg-ink text-bone">
-    <div class="mx-auto max-w-[1600px] px-4 pt-16 sm:px-6 sm:pt-20 lg:px-8">
-        <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
+<footer class="bg-ink text-bone" id="kontak">
+    <div class="mx-auto max-w-[1600px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div class="grid gap-12 lg:grid-cols-12">
             <div class="lg:col-span-5">
-                <a href="<?= url('/') ?>" class="inline-flex items-center gap-3" aria-label="<?= e($site['name']) ?>">
+                <a href="<?= url('/') ?>" class="group flex items-center gap-3">
                     <?php if ($logo !== null): ?>
-                        <img src="<?= e($logo) ?>" alt="Logo <?= e($site['name']) ?> IIB Darmajaya" width="52" height="52" class="h-13 w-13 object-contain" loading="lazy">
-                    <?php else: ?>
-                        <span class="grid h-12 w-12 place-items-center bg-gold font-display text-xl font-black text-ink">S</span>
+                        <img
+                            src="<?= e($logo) ?>"
+                            alt="Logo <?= e($site['name']) ?>"
+                            width="48"
+                            height="48"
+                            class="h-12 w-12 shrink-0 transition group-hover:scale-105"
+                        >
                     <?php endif; ?>
-                    <span class="flex flex-col">
-                        <span class="font-display text-2xl font-black leading-none tracking-[-0.03em]"><?= e($site['name']) ?></span>
-                        <span class="mt-1 text-[13px] font-medium leading-none text-bone/80">IIB Darmajaya</span>
-                    </span>
+                    <span class="font-display text-2xl font-black uppercase tracking-[-0.03em]"><?= e($site['name']) ?></span>
                 </a>
-
-                <p class="mt-8 max-w-md font-display text-[clamp(1.9rem,3.2vw,3rem)] font-black leading-[0.98] tracking-[-0.03em]">
-                    Ngoprek terus, bareng-bareng.
-                </p>
-                <p class="mt-5 max-w-md text-base leading-relaxed text-bone/80">
-                    <?= e($site['tagline']) ?>
+                <p class="mt-6 max-w-md text-base leading-relaxed text-bone/85">
+                    <?= e($site['description']) ?>
                 </p>
             </div>
 
-            <nav class="lg:col-span-3 lg:col-start-7" aria-label="Tautan footer">
-                <h2 class="font-display text-lg font-bold">Jelajahi</h2>
-                <ul class="mt-4 space-y-3">
-                    <?php foreach ($footerLinks as $label => $href): ?>
-                        <li>
-                            <a href="<?= e($href) ?>" class="footer-link text-base text-bone/85"><?= e($label) ?></a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+            <nav class="grid gap-8 sm:grid-cols-2 lg:col-span-4">
+                <div>
+                    <h2 class="font-display text-lg font-bold">Menu</h2>
+                    <ul class="mt-4 space-y-3 text-base text-bone/85">
+                        <?php foreach ($footerLinks as $label => $url): ?>
+                            <li><a href="<?= e($url) ?>" class="footer-link"><?= e($label) ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
             </nav>
 
             <div class="lg:col-span-3">
@@ -120,10 +110,12 @@ $photoCredits = [
                     </li>
                 </ul>
 
-                <a href="<?= e($gabungUrl) ?>" class="mt-7 inline-flex items-center gap-2 bg-gold px-4 py-3 text-base font-bold text-ink transition hover:bg-bone active:translate-y-0.5">
-                    Gabung angkatan ini
-                    <svg class="h-4 w-4" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>
-                </a>
+                <?php if ($gabungUrl !== null): ?>
+                    <a href="<?= e($gabungUrl) ?>" class="mt-7 inline-flex items-center gap-2 bg-gold px-4 py-3 text-base font-bold text-ink transition hover:bg-bone active:translate-y-0.5">
+                        Gabung angkatan ini
+                        <svg class="h-4 w-4" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -147,15 +139,9 @@ $photoCredits = [
                 <a href="<?= url('/admin') ?>" class="footer-link text-bone/75">Admin</a>
                 <a href="#atas" class="footer-link inline-flex items-center gap-2 text-bone/85">
                     Kembali ke atas
-                    <span aria-hidden="true">↑</span>
+                    <svg class="h-3 w-3" aria-hidden="true"><use href="#i-chevron-up"/></svg>
                 </a>
             </div>
-        </div>
-
-        <div aria-hidden="true" class="select-none overflow-hidden pt-6">
-            <p class="translate-y-[18%] whitespace-nowrap text-center font-display text-[23vw] font-black leading-none tracking-[-0.06em] text-bone/10">
-                <?= e($site['name']) ?>
-            </p>
         </div>
     </div>
 </footer>

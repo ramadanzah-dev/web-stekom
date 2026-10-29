@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-$gabungUrl = url('/berita/open-recruitment-anggota-stekom-2026-2027');
+$oprecAktif = (bool) config('oprec_aktif', false);
+$gabungUrl = $oprecAktif ? url((string) config('oprec_link', '/berita')) : null;
+$deadlineOprec = (string) config('oprec_deadline', '30 November 2026');
+
 $utama = $beritaTerbaru[0] ?? null;
 $sisaBerita = array_slice($beritaTerbaru, 1);
 ?>
@@ -23,13 +26,15 @@ $sisaBerita = array_slice($beritaTerbaru, 1);
                 </p>
 
                 <div class="mt-7 flex flex-wrap gap-3">
-                    <a
-                        href="<?= e($gabungUrl) ?>"
-                        class="press inline-flex items-center gap-3 bg-gold px-6 py-4 text-lg font-bold text-ink hover:bg-bone"
-                    >
-                        Gabung angkatan ini
-                        <svg class="h-5 w-5" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>
-                    </a>
+                    <?php if ($gabungUrl !== null): ?>
+                        <a
+                            href="<?= e($gabungUrl) ?>"
+                            class="press inline-flex items-center gap-3 bg-gold px-6 py-4 text-lg font-bold text-ink hover:bg-bone"
+                        >
+                            Gabung angkatan ini
+                            <svg class="h-5 w-5" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>
+                        </a>
+                    <?php endif; ?>
                     <a
                         href="#divisi"
                         class="press inline-flex items-center gap-3 bg-bone px-6 py-4 text-lg font-bold text-ink hover:bg-gold"
@@ -79,14 +84,13 @@ $sisaBerita = array_slice($beritaTerbaru, 1);
 
 <section id="tentang" class="scroll-mt-20 bg-bone text-ink">
     <div class="mx-auto max-w-[1600px] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <h2 class="reveal font-display text-[clamp(2.7rem,7.2vw,6.8rem)] font-black uppercase leading-[0.88] tracking-[-0.045em]">
-            Bukan cuma<br>
-            <span class="text-cobalt">organisasi.</span>
-        </h2>
-
-        <div class="mt-12 grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-8">
+        <div class="grid gap-8 lg:grid-cols-12 lg:items-start lg:gap-8">
             <div class="reveal lg:col-span-5">
-                <p class="max-w-[52ch] text-xl leading-relaxed text-ink">
+                <h2 class="font-display text-[clamp(2.7rem,7.2vw,6.8rem)] font-black uppercase leading-[0.88] tracking-[-0.045em]">
+                    Bukan cuma<br>
+                    <span class="text-cobalt">organisasi.</span>
+                </h2>
+                <p class="mt-6 max-w-[52ch] text-xl leading-relaxed text-ink">
                     STEKOM tempat mahasiswa Sistem Komputer dan Teknik Komputer belajar di luar kelas:
                     membangun proyek, berbagi ilmu, dan menyiapkan diri buat industri.
                 </p>
@@ -431,17 +435,19 @@ $sisaBerita = array_slice($beritaTerbaru, 1);
     </div>
 </section>
 
-<a href="<?= e($gabungUrl) ?>" class="cta-band block bg-gold text-ink">
-    <div class="mx-auto max-w-[1600px] px-4 pb-6 pt-8 sm:px-6 sm:pb-8 sm:pt-10 lg:px-8">
-        <div class="flex items-start justify-between gap-6">
-            <p class="max-w-[42ch] text-lg font-bold leading-snug sm:text-xl">
-                Pendaftaran anggota 2026/2027 dibuka sampai 30 November. Jangan cuma
-                jadi penonton.
-            </p>
-            <svg class="h-10 w-10 shrink-0 sm:h-12 sm:w-12" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>
+<?php if ($oprecAktif): ?>
+    <a href="<?= e($gabungUrl) ?>" class="cta-band block bg-gold text-ink">
+        <div class="mx-auto max-w-[1600px] px-4 pb-6 pt-8 sm:px-6 sm:pb-8 sm:pt-10 lg:px-8">
+            <div class="flex items-start justify-between gap-6">
+                <p class="max-w-[42ch] text-lg font-bold leading-snug sm:text-xl">
+                    Pendaftaran anggota 2026/2027 dibuka sampai <?= e($deadlineOprec) ?>. Jangan cuma
+                    jadi penonton.
+                </p>
+                <svg class="h-10 w-10 shrink-0 sm:h-12 sm:w-12" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>
+            </div>
+            <span class="cta-word mt-4 block text-center font-display text-[clamp(5rem,21vw,19rem)] font-black uppercase leading-[0.78] tracking-[-0.055em]">
+                Gabung
+            </span>
         </div>
-        <span class="cta-word mt-4 block text-center font-display text-[clamp(5rem,21vw,19rem)] font-black uppercase leading-[0.78] tracking-[-0.055em]">
-            Gabung
-        </span>
-    </div>
-</a>
+    </a>
+<?php endif; ?>

@@ -17,7 +17,7 @@ final class Divisi
     public function withKoordinator(string $periode): array
     {
         $statement = Database::connection()->prepare(
-            'SELECT d.id, d.nama, d.slug, d.deskripsi, p.nama AS koordinator, p.foto AS koordinator_foto
+            'SELECT d.id, d.nama, d.slug, d.tagline, d.deskripsi, p.nama AS koordinator, p.foto AS koordinator_foto
              FROM divisi d
              LEFT JOIN pengurus p
                 ON p.divisi_id = d.id
@@ -39,7 +39,7 @@ final class Divisi
     public function all(): array
     {
         $statement = Database::connection()->query(
-            'SELECT d.id, d.nama, d.slug, d.deskripsi,
+            'SELECT d.id, d.nama, d.slug, d.tagline, d.deskripsi,
                     (SELECT COUNT(*) FROM pengurus p WHERE p.divisi_id = d.id) AS jumlah_pengurus
              FROM divisi d
              ORDER BY d.id ASC'
@@ -54,7 +54,7 @@ final class Divisi
     public function find(int $id): ?array
     {
         $statement = Database::connection()->prepare(
-            'SELECT id, nama, slug, deskripsi FROM divisi WHERE id = :id LIMIT 1'
+            'SELECT id, nama, slug, tagline, deskripsi FROM divisi WHERE id = :id LIMIT 1'
         );
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
@@ -65,12 +65,12 @@ final class Divisi
     }
 
     /**
-     * @param array{nama: string, slug: string, deskripsi: string} $data
+     * @param array{nama: string, slug: string, tagline?: ?string, deskripsi: string} $data
      */
     public function create(array $data): int
     {
         $statement = Database::connection()->prepare(
-            'INSERT INTO divisi (nama, slug, deskripsi) VALUES (:nama, :slug, :deskripsi)'
+            'INSERT INTO divisi (nama, slug, tagline, deskripsi) VALUES (:nama, :slug, :tagline, :deskripsi)'
         );
 
         $this->bindData($statement, $data);
@@ -80,13 +80,13 @@ final class Divisi
     }
 
     /**
-     * @param array{nama: string, slug: string, deskripsi: string} $data
+     * @param array{nama: string, slug: string, tagline?: ?string, deskripsi: string} $data
      */
     public function update(int $id, array $data): bool
     {
         $statement = Database::connection()->prepare(
             'UPDATE divisi
-             SET nama = :nama, slug = :slug, deskripsi = :deskripsi
+             SET nama = :nama, slug = :slug, tagline = :tagline, deskripsi = :deskripsi
              WHERE id = :id'
         );
 
@@ -144,12 +144,13 @@ final class Divisi
     }
 
     /**
-     * @param array{nama: string, slug: string, deskripsi: string} $data
+     * @param array{nama: string, slug: string, tagline?: ?string, deskripsi: string} $data
      */
     private function bindData(\PDOStatement $statement, array $data): void
     {
         $statement->bindValue(':nama', $data['nama']);
         $statement->bindValue(':slug', $data['slug']);
+        $statement->bindValue(':tagline', $data['tagline'] ?? null);
         $statement->bindValue(':deskripsi', $data['deskripsi']);
     }
 }

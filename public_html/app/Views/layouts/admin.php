@@ -9,6 +9,7 @@ $navItems = [
     ['label' => 'Berita', 'href' => url('/admin/berita'), 'icon' => 'i-news', 'active' => str_starts_with($currentPath, '/admin/berita')],
     ['label' => 'Pengurus', 'href' => url('/admin/pengurus'), 'icon' => 'i-users', 'active' => str_starts_with($currentPath, '/admin/pengurus')],
     ['label' => 'Divisi', 'href' => url('/admin/divisi'), 'icon' => 'i-layers', 'active' => str_starts_with($currentPath, '/admin/divisi')],
+    ['label' => 'Kegiatan', 'href' => url('/admin/kegiatan'), 'icon' => 'i-calendar', 'active' => str_starts_with($currentPath, '/admin/kegiatan')],
     ['label' => 'Pengaturan', 'href' => url('/admin/pengaturan'), 'icon' => 'i-settings', 'active' => str_starts_with($currentPath, '/admin/pengaturan')],
 ];
 
@@ -54,8 +55,8 @@ $logo = gambar_url($site['logo'] ?? null);
             },
         };
     </script>
-    <link rel="stylesheet" href="<?= asset('css/custom.css') ?>">
-    <link rel="stylesheet" href="<?= asset('css/admin.css') ?>">
+    <link rel="stylesheet" href="<?= asset('css/custom.css') ?>?v=<?= filemtime(BASE_PATH . '/public_html/css/custom.css') ?>">
+    <link rel="stylesheet" href="<?= asset('css/admin.css') ?>?v=<?= filemtime(BASE_PATH . '/public_html/css/admin.css') ?>">
 </head>
 <body class="min-h-dvh bg-bone font-sans text-ink antialiased">
     <?php require BASE_PATH . '/app/Views/partials/icons.php'; ?>
@@ -70,7 +71,7 @@ $logo = gambar_url($site['logo'] ?? null);
     <div class="lg:flex">
         <aside
             id="admin-sidebar"
-            class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col bg-ink text-bone transition-transform duration-300 lg:sticky lg:top-0 lg:h-dvh lg:translate-x-0"
+            class="fixed top-0 left-0 z-50 flex h-screen w-72 -translate-x-full flex-col bg-ink text-bone transition-transform duration-300 lg:sticky lg:top-0 lg:h-screen lg:self-start lg:translate-x-0"
             aria-label="Navigasi admin"
         >
             <div class="flex h-20 items-center justify-between border-b border-white/10 px-5">
@@ -92,7 +93,7 @@ $logo = gambar_url($site['logo'] ?? null);
                 </button>
             </div>
 
-            <nav class="flex-1 overflow-y-auto px-3 py-6">
+            <nav class="flex-1 overflow-y-auto px-3 py-6 overscroll-contain">
                 <p class="px-3 pb-2 text-xs font-semibold text-bone/55">Konten</p>
                 <div class="space-y-0.5">
                     <?php foreach ($navItems as $item): ?>
@@ -138,7 +139,7 @@ $logo = gambar_url($site['logo'] ?? null);
             </div>
         </aside>
 
-        <div class="flex min-h-dvh min-w-0 flex-1 flex-col">
+        <div class="flex min-h-dvh min-w-0 flex-1 flex-col overflow-x-clip">
             <header class="sticky top-0 z-30 border-b border-ink/10 bg-bone">
                 <div class="mx-auto flex h-16 w-full max-w-[1500px] items-center justify-between gap-4 px-4 sm:px-6 lg:h-[72px] lg:px-8">
                     <div class="flex min-w-0 items-center gap-3">

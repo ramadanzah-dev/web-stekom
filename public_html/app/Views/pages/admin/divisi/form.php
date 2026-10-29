@@ -65,6 +65,23 @@ $borderClass = static fn (string $key): string => $fieldError($key) ? 'border-re
             </div>
 
             <div class="mt-4">
+                <label for="tagline" class="block text-[13px] font-semibold text-ink">Tagline / Subjudul Beranda</label>
+                <input
+                    type="text"
+                    id="tagline"
+                    name="tagline"
+                    value="<?= e((string) ($divisi['tagline'] ?? '')) ?>"
+                    maxlength="255"
+                    class="<?= e($inputClass . ' ' . $borderClass('tagline')) ?>"
+                    placeholder="Bikin web & produk digital"
+                >
+                <p class="mt-1.5 text-xs text-muted">Tampil di kartu divisi pada halaman Beranda.</p>
+                <?php if ($fieldError('tagline')): ?>
+                    <p class="mt-1.5 text-xs font-medium text-red"><?= e($errors['tagline']) ?></p>
+                <?php endif; ?>
+            </div>
+
+            <div class="mt-4">
                 <label for="deskripsi" class="block text-[13px] font-semibold text-ink">Deskripsi <span class="text-red">*</span></label>
                 <textarea
                     id="deskripsi"
