@@ -146,29 +146,115 @@ declare(strict_types=1);
 
         <?php if ($divisi !== []): ?>
             <div class="reveal mt-16">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-gold">Koordinator Divisi</h3>
-                <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-gold">Divisi & Anggota</h3>
+                <div class="mt-6 grid gap-6 lg:grid-cols-2">
                     <?php foreach ($divisi as $item): ?>
-                        <?php $foto = trim((string) ($item['koordinator_foto'] ?? '')); ?>
-                        <article class="flex items-center gap-4 border border-bone/15 bg-ink-soft p-5 transition hover:border-gold">
-                            <span class="grid h-14 w-14 shrink-0 place-items-center overflow-hidden bg-cobalt font-display text-base font-black text-gold">
-                                <?php if ($foto !== ''): ?>
-                                    <img
-                                        src="<?= e(asset($foto)) ?>"
-                                        alt="Foto <?= e((string) ($item['koordinator'] ?? 'koordinator divisi')) ?>"
-                                        loading="lazy"
-                                        class="h-full w-full object-cover"
-                                    >
-                                <?php else: ?>
-                                    <?= e(initials((string) ($item['koordinator'] ?? '?'))) ?>
+                        <article class="border border-bone/15 bg-ink-soft p-6 sm:p-8 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-start justify-between gap-4">
+                                    <div>
+                                        <span class="text-xs font-bold uppercase tracking-wider text-gold"><?= e($item['nama']) ?></span>
+                                        <h4 class="mt-1 font-display text-xl font-bold text-bone"><?= e($item['tagline'] ?? '') ?></h4>
+                                    </div>
+                                </div>
+                                <?php if (!empty($item['deskripsi'])): ?>
+                                    <p class="mt-3 text-sm text-bone/70 leading-relaxed"><?= e($item['deskripsi']) ?></p>
                                 <?php endif; ?>
-                            </span>
-                            <div class="min-w-0">
-                                <p class="text-xs font-bold uppercase tracking-wider text-gold"><?= e($item['nama']) ?></p>
-                                <h4 class="mt-1 font-display text-base font-bold text-bone truncate"><?= e($item['koordinator'] ?? 'Belum ditetapkan') ?></h4>
-                                <p class="mt-0.5 text-xs text-bone/60">Koordinator Divisi</p>
+
+                                <!-- Koordinator -->
+                                <div class="mt-6 border-t border-bone/10 pt-5">
+                                    <p class="text-xs font-bold uppercase tracking-wider text-bone/50">Koordinator Divisi</p>
+                                    <div class="mt-3 flex items-center gap-4">
+                                        <?php $kFoto = trim((string) ($item['koordinator_foto'] ?? '')); ?>
+                                        <span class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden bg-cobalt font-display text-sm font-black text-gold">
+                                            <?php if ($kFoto !== ''): ?>
+                                                <img src="<?= e(asset($kFoto)) ?>" alt="" class="h-full w-full object-cover">
+                                            <?php else: ?>
+                                                <?= e(initials((string) ($item['koordinator'] ?? '?'))) ?>
+                                            <?php endif; ?>
+                                        </span>
+                                        <div class="min-w-0">
+                                            <p class="font-display text-base font-bold text-bone truncate"><?= e($item['koordinator'] ?? 'Belum ditetapkan') ?></p>
+                                            <p class="text-xs text-gold"><?= e($item['nama']) ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Anggota Divisi -->
+                                <?php 
+                                $anggotaList = array_filter($item['anggota'] ?? [], static fn($p) => $p['jabatan'] !== 'Koordinator Divisi');
+                                ?>
+                                <?php if ($anggotaList !== []): ?>
+                                    <div class="mt-5 border-t border-bone/10 pt-5">
+                                        <p class="text-xs font-bold uppercase tracking-wider text-bone/50">Anggota (<?= count($anggotaList) ?>)</p>
+                                        <div class="mt-3 grid gap-3 sm:grid-cols-2">
+                                            <?php foreach ($anggotaList as $m): ?>
+                                                <div class="flex items-center gap-3 bg-ink p-3 border border-bone/10">
+                                                    <?php $mFoto = trim((string) ($m['foto'] ?? '')); ?>
+                                                    <span class="grid h-10 w-10 shrink-0 place-items-center overflow-hidden bg-cobalt-deep font-display text-xs font-bold text-bone">
+                                                        <?php if ($mFoto !== ''): ?>
+                                                            <img src="<?= e(asset($mFoto)) ?>" alt="" class="h-full w-full object-cover">
+                                                        <?php else: ?>
+                                                            <?= e(initials((string) $m['nama'])) ?>
+                                                        <?php endif; ?>
+                                                    </span>
+                                                    <div class="min-w-0">
+                                                        <p class="font-display text-xs font-bold text-bone truncate"><?= e($m['nama']) ?></p>
+                                                        <p class="text-[11px] text-gold truncate"><?= e($m['jabatan']) ?></p>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <?php if (!empty($pastPengurus)): ?>
+            <div class="reveal mt-24 border-t border-bone/15 pt-16">
+                <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gold">Arsip Kepengurusan</span>
+                        <h3 class="mt-3 font-display text-[clamp(2rem,4vw,3.5rem)] font-black uppercase leading-[0.9] tracking-[-0.04em]">
+                            Pengurus <span class="text-gold">terdahulu.</span>
+                        </h3>
+                    </div>
+                    <p class="max-w-md text-sm text-bone/70">
+                        Jejak kepengurusan HIMA STEKOM dari periode-periode sebelumnya.
+                    </p>
+                </div>
+
+                <div class="mt-12 space-y-16">
+                    <?php foreach ($pastPengurus as $periodeKey => $members): ?>
+                        <div class="border border-bone/15 bg-ink-soft p-6 sm:p-8">
+                            <div class="flex items-center justify-between border-b border-bone/10 pb-4">
+                                <h4 class="font-display text-xl font-bold text-gold">Periode <?= e($periodeKey) ?></h4>
+                                <span class="text-xs text-bone/60"><?= count($members) ?> pengurus</span>
+                            </div>
+
+                            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                                <?php foreach ($members as $p): ?>
+                                    <?php $pFoto = trim((string) ($p['foto'] ?? '')); ?>
+                                    <div class="flex items-center gap-3 bg-ink p-4 border border-bone/10">
+                                        <span class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden bg-cobalt-deep font-display text-xs font-bold text-bone">
+                                            <?php if ($pFoto !== ''): ?>
+                                                <img src="<?= e(asset($pFoto)) ?>" alt="" class="h-full w-full object-cover">
+                                            <?php else: ?>
+                                                <?= e(initials((string) $p['nama'])) ?>
+                                            <?php endif; ?>
+                                        </span>
+                                        <div class="min-w-0">
+                                            <p class="font-display text-xs font-bold text-bone truncate"><?= e($p['nama']) ?></p>
+                                            <p class="text-[11px] text-gold truncate"><?= e($p['jabatan']) ?><?= !empty($p['divisi_nama']) ? ' · ' . e($p['divisi_nama']) : '' ?></p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
                     <?php endforeach; ?>
                 </div>
             </div>

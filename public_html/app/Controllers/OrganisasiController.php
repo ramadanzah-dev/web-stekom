@@ -13,7 +13,8 @@ final class OrganisasiController extends Controller
     public function index(): void
     {
         $core = (new Pengurus())->core((string) config('site.periode'));
-        $divisi = (new Divisi())->withKoordinator((string) config('site.periode'));
+        $divisi = (new Divisi())->withMembers((string) config('site.periode'));
+        $pastPengurus = (new Pengurus())->pastByPeriod((string) config('site.periode'));
 
         $this->view('pages/organisasi/index', [
             'title' => 'Organisasi HIMA',
@@ -47,6 +48,7 @@ final class OrganisasiController extends Controller
             ],
             'core' => $core,
             'divisi' => $divisi,
+            'pastPengurus' => $pastPengurus,
             'stats' => [
                 ['value' => '2017', 'label' => 'Berdiri'],
                 ['value' => (string) count($divisi), 'label' => 'Divisi'],

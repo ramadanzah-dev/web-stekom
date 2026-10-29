@@ -10,6 +10,39 @@ use PDO;
 final class Divisi
 {
     /**
+     * Daftar divisi beserta koordinator dan anggota.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function withMembers(string $periode): array
+    {
+        $divisiList = $this->withKoordinator($periode);
+
+        $statement = Database::connection()->prepare(
+            'SELECT id, nama, foto, jabatan, divisi_id, periode
+             FROM pengurus
+             WHERE aktif = 1 AND divisi_id IS NOT NULL AND periode = :periode
+             ORDER BY urutan ASC, id ASC'
+        );
+        $statement->bindValue(':periode', $periode);
+        $statement->execute();
+        $allPengurus = $statement->fetchAll();
+
+        $grouped = [];
+        foreach ($allPengurus as $p) {
+            $divId = (int) $p['divisi_id'];
+            $grouped[$divId][] = $p;
+        }
+
+        foreach ($divisiList as &$d) {
+            $d['anggota'] = $grouped[(int) $d['id']] ?? [];
+        }
+        unset($d);
+
+        return $divisiList;
+    }
+
+    /**
      * Daftar divisi beserta nama koordinatornya.
      *
      * @return array<int, array<string, mixed>>

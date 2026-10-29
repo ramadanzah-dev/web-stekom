@@ -11,6 +11,31 @@ use PDOStatement;
 final class Pengurus
 {
     /**
+     * @return array<string, array<int, array<string, mixed>>>
+     */
+    public function pastByPeriod(string $currentPeriod): array
+    {
+        $statement = Database::connection()->prepare(
+            'SELECT p.id, p.nama, p.foto, p.jabatan, p.divisi_id, p.periode, p.urutan,
+                    d.nama AS divisi_nama
+             FROM pengurus p
+             LEFT JOIN divisi d ON d.id = p.divisi_id
+             WHERE p.periode <> :currentPeriod
+             ORDER BY p.periode DESC, p.urutan ASC, p.id ASC'
+        );
+        $statement->bindValue(':currentPeriod', $currentPeriod);
+        $statement->execute();
+
+        $rows = $statement->fetchAll();
+        $grouped = [];
+        foreach ($rows as $row) {
+            $grouped[$row['periode']][] = $row;
+        }
+
+        return $grouped;
+    }
+
+    /**
      * Pengurus inti (tanpa divisi), diurutkan sesuai struktur.
      *
      * @return array<int, array<string, mixed>>
