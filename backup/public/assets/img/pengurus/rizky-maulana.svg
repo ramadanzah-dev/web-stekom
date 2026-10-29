@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" role="img" aria-label="Foto dummy Rizky Maulana">
+    <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#C7EFEF"/>
+            <stop offset="1" stop-color="#49A7A7"/>
+        </linearGradient>
+    </defs>
+
+    <rect width="600" height="750" fill="url(#bg)"/>
+    <circle cx="492" cy="132" r="168" fill="#FFFFFF" opacity=".16"/>
+    <circle cx="86" cy="648" r="128" fill="#0A0B0F" opacity=".05"/>
+    <circle cx="300" cy="360" r="228" fill="none" stroke="#0A0B0F" stroke-opacity=".07" stroke-width="2"/>
+
+    <rect x="268" y="426" width="64" height="112" rx="28" fill="#C98B5E"/>
+    <path d="M60 750c8-142 94-216 240-216s232 74 240 216z" fill="#14161C"/>
+    <path d="M250 560l50 46 50-46" fill="none" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="7" stroke-linecap="round"/>
+
+    <circle cx="184" cy="360" r="22" fill="#C98B5E"/>
+    <circle cx="416" cy="360" r="22" fill="#C98B5E"/>
+    <ellipse cx="300" cy="345" rx="112" ry="124" fill="#C98B5E"/>
+
+    <path d="M188 354c-6-92 44-146 112-146s118 54 112 146c-14-38-50-58-112-58s-98 20-112 58z" fill="#141414"/>
+
+    <g fill="#17181D">
+        <ellipse cx="262" cy="351" rx="7" ry="9"/>
+        <ellipse cx="338" cy="351" rx="7" ry="9"/>
+    </g>
+    <g fill="none" stroke="#17181D" stroke-opacity=".45" stroke-linecap="round">
+        <path d="M246 329q16-8 32 0" stroke-width="5"/>
+        <path d="M322 329q16-8 32 0" stroke-width="5"/>
+        <path d="M300 362v18q0 7 9 7" stroke-width="4"/>
+        <path d="M278 405q22 17 44 0" stroke-width="5"/>
+    </g>
+    <g fill="none" stroke="#17181D" stroke-width="4" stroke-opacity=".8">
+        <rect x="229" y="332" width="58" height="38" rx="13"/>
+        <rect x="313" y="332" width="58" height="38" rx="13"/>
+        <path d="M287 349h26M229 347h-22M371 347h22"/>
+    </g>
+</svg>

@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controllers;
+
+use App\Core\Controller;
+
+final class ErrorController extends Controller
+{
+    public function notFound(): void
+    {
+        http_response_code(404);
+
+        $this->view('pages/errors/404', [
+            'title' => 'Halaman tidak ditemukan',
+            'description' => 'Halaman yang kamu cari tidak tersedia.',
+        ]);
+    }
+}

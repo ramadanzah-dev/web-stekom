@@ -73,7 +73,10 @@ $photoCredits = [
                     <?php endif; ?>
                     <span class="font-display text-2xl font-black uppercase tracking-[-0.03em]"><?= e($site['name']) ?></span>
                 </a>
-                <p class="mt-6 max-w-md text-base leading-relaxed text-bone/85">
+                <?php if (!empty($site['tagline'])): ?>
+                    <p class="mt-2 text-sm font-semibold text-gold"><?= e($site['tagline']) ?></p>
+                <?php endif; ?>
+                <p class="mt-4 max-w-md text-base leading-relaxed text-bone/85">
                     <?= e($site['description']) ?>
                 </p>
             </div>

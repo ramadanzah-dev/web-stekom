@@ -22,36 +22,81 @@ $gabungUrl = $oprecAktif ? url((string) config('oprec_link', '/berita')) : null;
             <?php if ($logo !== null): ?>
                 <img
                     src="<?= e($logo) ?>"
-                    alt="Logo <?= e($site['name']) ?>"
-                    width="40"
-                    height="40"
-                    class="h-10 w-10 shrink-0 transition group-hover:scale-105"
+                    alt="Logo <?= e($site['name']) ?> IIB Darmajaya"
+                    width="48"
+                    height="48"
+                    class="h-10 w-10 shrink-0 object-contain sm:h-12 sm:w-12"
                 >
+            <?php else: ?>
+                <span class="grid h-10 w-10 shrink-0 place-items-center bg-gold font-display text-xl font-black text-ink sm:h-12 sm:w-12">
+                    S
+                </span>
             <?php endif; ?>
-            <span class="truncate font-display text-xl font-black uppercase tracking-[-0.03em]"><?= e($site['name'] ?? 'STEKOM') ?></span>
+
+            <span class="flex min-w-0 flex-col">
+                <span class="truncate font-display text-xl font-black leading-none tracking-[-0.03em] sm:text-2xl">
+                    <?= e($site['name'] ?? 'STEKOM') ?>
+                </span>
+                <span class="mt-1 truncate text-[13px] font-medium leading-none text-bone/85">
+                    IIB Darmajaya
+                </span>
+            </span>
         </a>
 
-        <nav class="hidden lg:flex items-center gap-1">
+        <nav class="hidden items-center gap-6 lg:flex" aria-label="Navigasi utama">
             <?php foreach ($navLinks as $link): ?>
                 <a
                     href="<?= e($link['href']) ?>"
-                    class="px-4 py-2 text-sm font-bold uppercase tracking-wider transition <?= $link['active'] ? 'text-gold' : 'text-bone hover:text-gold' ?>"
+                    class="nav-link py-2 text-base font-medium <?= $link['active'] ? 'text-gold' : 'text-bone/90' ?>"
+                    <?= $link['active'] ? 'aria-current="page"' : '' ?>
                 >
                     <?= e($link['label']) ?>
                 </a>
             <?php endforeach; ?>
         </nav>
 
-        <div class="flex items-center gap-3">
-            <?php if ($gabungUrl !== null): ?>
-                <a href="<?= e($gabungUrl) ?>" class="press hidden sm:flex items-center gap-2 bg-gold px-5 py-2.5 text-sm font-bold text-ink hover:bg-bone">
-                    Gabung
-                    <svg class="h-4 w-4" aria-hidden="true"><use href="#i-arrow-right"/></svg>
-                </a>
-            <?php endif; ?>
-            <button class="lg:hidden p-2" aria-label="Menu" data-menu-toggle>
-                <svg class="h-6 w-6"><use href="#i-menu"/></svg>
-            </button>
-        </div>
+        <?php if ($gabungUrl !== null): ?>
+            <a
+                href="<?= e($gabungUrl) ?>"
+                class="hidden items-center gap-2 bg-gold px-5 py-3 text-base font-bold text-ink transition hover:bg-bone active:translate-y-0.5 lg:inline-flex"
+            >
+                Gabung
+                <svg class="h-4 w-4" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>
+            </a>
+        <?php endif; ?>
+
+        <details class="mobile-menu lg:hidden" data-mobile-menu>
+            <summary class="flex h-11 cursor-pointer list-none items-center gap-2 bg-gold px-3 text-base font-bold text-ink">
+                Menu
+                <svg data-menu-open class="h-4 w-4" aria-hidden="true"><use href="#i-menu"/></svg>
+                <svg data-menu-close class="h-4 w-4" aria-hidden="true"><use href="#i-close"/></svg>
+            </summary>
+
+            <div class="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-cobalt-deep px-4 pb-10 pt-8 text-bone sm:top-20 sm:px-6">
+                <nav class="mx-auto flex max-w-[1600px] flex-col" aria-label="Navigasi seluler">
+                    <?php foreach ($navLinks as $link): ?>
+                        <a
+                            href="<?= e($link['href']) ?>"
+                            class="mobile-link flex items-center justify-between py-3 font-display text-[clamp(2rem,8vw,3.4rem)] font-black uppercase leading-none tracking-[-0.03em] <?= $link['active'] ? 'text-gold' : 'text-bone' ?>"
+                            <?= $link['active'] ? 'aria-current="page"' : '' ?>
+                        >
+                            <?= e($link['label']) ?>
+                            <svg class="h-6 w-6" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>
+                        </a>
+                    <?php endforeach; ?>
+
+                    <?php if ($gabungUrl !== null): ?>
+                        <a href="<?= e($gabungUrl) ?>" class="mt-8 inline-flex items-center justify-between bg-gold px-5 py-4 text-lg font-bold text-ink">
+                            Gabung HIMA STEKOM
+                            <svg class="h-5 w-5" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>
+                        </a>
+                    <?php endif; ?>
+
+                    <p class="mt-8 max-w-sm text-base leading-relaxed text-bone/80">
+                        Himpunan Mahasiswa Sistem Komputer dan Teknik Komputer, Kampus IIB Darmajaya, Bandar Lampung.
+                    </p>
+                </nav>
+            </div>
+        </details>
     </div>
 </header>

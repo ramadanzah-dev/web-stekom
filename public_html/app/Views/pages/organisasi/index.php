@@ -121,13 +121,14 @@ declare(strict_types=1);
                     <?php $foto = trim((string) ($person['foto'] ?? '')); ?>
                     <article class="group border border-bone/15 bg-ink-soft transition hover:border-gold">
                         <div class="aspect-[4/5] overflow-hidden bg-cobalt-deep">
-                            <?php if ($foto !== ''): ?>
-                                <img
-                                    src="<?= e(asset($foto)) ?>"
-                                    alt="Foto <?= e($person['nama']) ?>"
-                                    loading="lazy"
-                                    class="h-full w-full object-cover"
-                                >
+                                <?php $foto = gambar_url($person['foto'] ?? null); ?>
+                                <?php if ($foto !== null): ?>
+                                    <img
+                                        src="<?= e($foto) ?>"
+                                        alt="Foto <?= e($person['nama']) ?>"
+                                        loading="lazy"
+                                        class="h-full w-full object-cover"
+                                    >
                             <?php else: ?>
                                 <span class="grid h-full w-full place-items-center bg-gold font-display text-4xl font-black text-ink">
                                     <?= e(initials((string) $person['nama'])) ?>
@@ -165,10 +166,10 @@ declare(strict_types=1);
                                 <div class="mt-6 border-t border-bone/10 pt-5">
                                     <p class="text-xs font-bold uppercase tracking-wider text-bone/50">Koordinator Divisi</p>
                                     <div class="mt-3 flex items-center gap-4">
-                                        <?php $kFoto = trim((string) ($item['koordinator_foto'] ?? '')); ?>
+                                        <?php $kFoto = gambar_url($item['koordinator_foto'] ?? null); ?>
                                         <span class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden bg-cobalt font-display text-sm font-black text-gold">
-                                            <?php if ($kFoto !== ''): ?>
-                                                <img src="<?= e(asset($kFoto)) ?>" alt="" class="h-full w-full object-cover">
+                                            <?php if ($kFoto !== null): ?>
+                                                <img src="<?= e($kFoto) ?>" alt="" class="h-full w-full object-cover">
                                             <?php else: ?>
                                                 <?= e(initials((string) ($item['koordinator'] ?? '?'))) ?>
                                             <?php endif; ?>
@@ -190,10 +191,10 @@ declare(strict_types=1);
                                         <div class="mt-3 grid gap-3 sm:grid-cols-2">
                                             <?php foreach ($anggotaList as $m): ?>
                                                 <div class="flex items-center gap-3 bg-ink p-3 border border-bone/10">
-                                                    <?php $mFoto = trim((string) ($m['foto'] ?? '')); ?>
+                                                    <?php $mFoto = gambar_url($m['foto'] ?? null); ?>
                                                     <span class="grid h-10 w-10 shrink-0 place-items-center overflow-hidden bg-cobalt-deep font-display text-xs font-bold text-bone">
-                                                        <?php if ($mFoto !== ''): ?>
-                                                            <img src="<?= e(asset($mFoto)) ?>" alt="" class="h-full w-full object-cover">
+                                                        <?php if ($mFoto !== null): ?>
+                                                            <img src="<?= e($mFoto) ?>" alt="" class="h-full w-full object-cover">
                                                         <?php else: ?>
                                                             <?= e(initials((string) $m['nama'])) ?>
                                                         <?php endif; ?>
@@ -238,12 +239,12 @@ declare(strict_types=1);
 
                             <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                                 <?php foreach ($members as $p): ?>
-                                    <?php $pFoto = trim((string) ($p['foto'] ?? '')); ?>
+                                    <?php $pFoto = gambar_url($p['foto'] ?? null); ?>
                                     <article class="group border border-bone/15 bg-ink transition hover:border-gold">
                                         <div class="aspect-[4/5] overflow-hidden bg-cobalt-deep">
-                                            <?php if ($pFoto !== ''): ?>
+                                            <?php if ($pFoto !== null): ?>
                                                 <img
-                                                    src="<?= e(asset($pFoto)) ?>"
+                                                    src="<?= e($pFoto) ?>"
                                                     alt="Foto <?= e($p['nama']) ?>"
                                                     loading="lazy"
                                                     class="h-full w-full object-cover"

@@ -21,7 +21,7 @@ $sisaBerita = array_slice($beritaTerbaru, 1);
         <div class="mt-8 grid gap-8 pb-10 sm:mt-10 lg:grid-cols-12 lg:items-end lg:gap-8 lg:pb-14">
             <div class="hero-fade lg:col-span-5">
                 <p class="max-w-[40ch] text-lg leading-relaxed text-bone sm:text-xl">
-                    Himpunan mahasiswa Sistem Komputer dan Teknik Komputer IIB Darmajaya.
+                    <?= e($site['tagline'] ?? 'Ruang tumbuh mahasiswa Sistem Komputer.') ?>
                     Buat yang suka bongkar alat, bikin produk, dan ngulik bareng.
                 </p>
 
@@ -440,7 +440,7 @@ $sisaBerita = array_slice($beritaTerbaru, 1);
         <div class="mx-auto max-w-[1600px] px-4 pb-6 pt-8 sm:px-6 sm:pb-8 sm:pt-10 lg:px-8">
             <div class="flex items-start justify-between gap-6">
                 <p class="max-w-[42ch] text-lg font-bold leading-snug sm:text-xl">
-                    Pendaftaran anggota 2026/2027 dibuka sampai <?= e($deadlineOprec) ?>. Jangan cuma
+                    Pendaftaran anggota dibuka sampai <?= e($deadlineOprec) ?>. Jangan cuma
                     jadi penonton.
                 </p>
                 <svg class="h-10 w-10 shrink-0 sm:h-12 sm:w-12" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>

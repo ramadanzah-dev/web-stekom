@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="Ilustrasi berita Workshop">
+    <defs>
+        
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+        <path d="M60 0H0v60" fill="none" stroke="#FFFFFF" stroke-opacity=".05"/>
+    </pattern>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0A0B0F"/>
+            <stop offset=".62" stop-color="#12141B"/>
+            <stop offset="1" stop-color="#1A1D27"/>
+        </linearGradient>
+        <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+            <stop offset="0" stop-color="#7EE0C3" stop-opacity=".28"/>
+            <stop offset="1" stop-color="#7EE0C3" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+
+    <rect width="1200" height="750" fill="url(#bg)"/>
+    <rect width="1200" height="750" fill="url(#grid)"/>
+    <circle cx="640" cy="360" r="330" fill="url(#glow)"/>
+
+    <text x="72" y="76" font-family="monospace" font-size="17" letter-spacing="4" fill="#FFFFFF" fill-opacity=".42">STEKOM / BERITA</text>
+    <g transform="translate(1128 56)">
+        <rect x="-1" y="-1" width="1" height="1" fill="none"/>
+    </g>
+    <text x="1128" y="78" text-anchor="end" font-family="monospace" font-size="15" letter-spacing="3" fill="#7EE0C3">KEGIATAN</text>
+
+    
+    <g transform="translate(600 360)">
+        <g fill="none" stroke="#7EE0C3" stroke-opacity=".35" stroke-width="2.5">
+            <path d="M-120 -60H-230V-140H-330M120 -60H230V-150H330M-120 60H-250V140H-340M120 60H250V150H340"/>
+            <path d="M-60 -120V-210M0 -120V-230M60 -120V-196M-60 120V210M0 120V230M60 120V200"/>
+        </g>
+        <rect x="-120" y="-120" width="240" height="240" rx="26" fill="#12141B" stroke="#7EE0C3" stroke-opacity=".7" stroke-width="2.5"/>
+        <g fill="#7EE0C3">
+            <rect x="-66" y="-66" width="58" height="58" rx="8" opacity=".9"/>
+            <rect x="8" y="-66" width="58" height="58" rx="8" opacity=".35"/>
+            <rect x="-66" y="8" width="58" height="58" rx="8" opacity=".35"/>
+            <rect x="8" y="8" width="58" height="58" rx="8" opacity=".7"/>
+        </g>
+        <g fill="#D6F35C">
+            <circle cx="-230" cy="-140" r="8"/>
+            <circle cx="230" cy="-150" r="8"/>
+            <circle cx="-250" cy="140" r="8"/>
+            <circle cx="250" cy="150" r="8"/>
+            <circle cx="0" cy="-230" r="8"/>
+            <circle cx="0" cy="230" r="8"/>
+        </g>
+        <g fill="none" stroke="#7EE0C3" stroke-width="2" stroke-opacity=".35">
+            <circle cx="0" cy="0" r="186" stroke-dasharray="4 14"/>
+        </g>
+    </g>
+
+    <text x="72" y="586" font-family="Georgia, serif" font-size="58" font-style="italic" fill="#F5F2EA" opacity="0.95">Sensor</text><text x="72" y="644" font-family="Georgia, serif" font-size="58" font-style="italic" fill="#F5F2EA" opacity="0.83">ke Data</text>
+    <text x="72" y="716" font-family="monospace" font-size="14" letter-spacing="3" fill="#FFFFFF" fill-opacity=".32">WORKSHOP · HIMA SISTEM KOMPUTER</text>
+
+    <text x="1128" y="706" text-anchor="end" font-family="monospace" font-size="96" font-weight="700" fill="none" stroke="#7EE0C3" stroke-opacity=".35" stroke-width="1.5">04</text>
+    <path d="M72 96h96" stroke="#7EE0C3" stroke-width="3"/>
+</svg>
