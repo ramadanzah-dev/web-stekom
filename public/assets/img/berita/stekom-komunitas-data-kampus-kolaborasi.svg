@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="Ilustrasi berita Kolaborasi">
+    <defs>
+        
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+        <path d="M60 0H0v60" fill="none" stroke="#FFFFFF" stroke-opacity=".05"/>
+    </pattern>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0A0B0F"/>
+            <stop offset=".62" stop-color="#12141B"/>
+            <stop offset="1" stop-color="#1A1D27"/>
+        </linearGradient>
+        <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+            <stop offset="0" stop-color="#8FB4FF" stop-opacity=".28"/>
+            <stop offset="1" stop-color="#8FB4FF" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+
+    <rect width="1200" height="750" fill="url(#bg)"/>
+    <rect width="1200" height="750" fill="url(#grid)"/>
+    <circle cx="640" cy="360" r="330" fill="url(#glow)"/>
+
+    <text x="72" y="76" font-family="monospace" font-size="17" letter-spacing="4" fill="#FFFFFF" fill-opacity=".42">STEKOM / BERITA</text>
+    <g transform="translate(1128 56)">
+        <rect x="-1" y="-1" width="1" height="1" fill="none"/>
+    </g>
+    <text x="1128" y="78" text-anchor="end" font-family="monospace" font-size="15" letter-spacing="3" fill="#8FB4FF">KOLABORASI</text>
+
+    
+    <g transform="translate(600 380)">
+        <g stroke="#8FB4FF" stroke-opacity=".2" stroke-width="1.5">
+            <path d="M-300 130H300M-300 40H300M-300 -50H300"/>
+        </g>
+        <g fill="#8FB4FF">
+            <rect x="-252" y="46" width="46" height="84" rx="8" opacity=".35"/>
+            <rect x="-184" y="6" width="46" height="124" rx="8" opacity=".5"/>
+            <rect x="-116" y="-42" width="46" height="172" rx="8" opacity=".65"/>
+            <rect x="-48" y="-86" width="46" height="216" rx="8" opacity=".85"/>
+            <rect x="20" y="-34" width="46" height="164" rx="8" opacity=".65"/>
+            <rect x="88" y="-118" width="46" height="248" rx="8"/>
+            <rect x="156" y="-70" width="46" height="200" rx="8" opacity=".7"/>
+            <rect x="224" y="-16" width="46" height="146" rx="8" opacity=".45"/>
+        </g>
+        <g fill="none" stroke="#5A5BF0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M-229 20L-161 -24 71 -48 111 -102 179 -60 247 12"/>
+        </g>
+        <g fill="#5A5BF0" stroke="#0A0B0F" stroke-width="3">
+            <circle cx="-229" cy="20" r="9"/>
+            <circle cx="-161" cy="-24" r="9"/>
+            <circle cx="71" cy="-48" r="9"/>
+            <circle cx="111" cy="-102" r="9"/>
+            <circle cx="179" cy="-60" r="9"/>
+            <circle cx="247" cy="12" r="9"/>
+        </g>
+    </g>
+
+    <text x="72" y="586" font-family="Georgia, serif" font-size="58" font-style="italic" fill="#F5F2EA" opacity="0.95">Data</text><text x="72" y="644" font-family="Georgia, serif" font-size="58" font-style="italic" fill="#F5F2EA" opacity="0.83">Terbuka</text>
+    <text x="72" y="716" font-family="monospace" font-size="14" letter-spacing="3" fill="#FFFFFF" fill-opacity=".32">KOLABORASI · HIMA SISTEM KOMPUTER</text>
+
+    <text x="1128" y="706" text-anchor="end" font-family="monospace" font-size="96" font-weight="700" fill="none" stroke="#8FB4FF" stroke-opacity=".35" stroke-width="1.5">05</text>
+    <path d="M72 96h96" stroke="#8FB4FF" stroke-width="3"/>
+</svg>

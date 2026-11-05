@@ -1,0 +1,367 @@
+/**
+ * Gaya kustom kecil di luar utilitas Tailwind.
+ * Palet poster: ink, cobalt, gold, red, bone.
+ */
+
+:root {
+    color-scheme: light;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: clip;
+}
+
+body {
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+::selection {
+    background: #ffd200;
+    color: #08172f;
+}
+
+:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------- hero */
+
+.hero-line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.035em;
+}
+
+.hero-line > span {
+    display: block;
+}
+
+@keyframes line-up {
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --------------------------------------------------------------- masuk */
+
+.reveal {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html.js .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+            opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+            transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html.js .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+    }
+
+    html.js .hero-line > span {
+        transform: translateY(110%);
+        animation: line-up 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    html.js .hero-line:nth-child(2) > span {
+        animation-delay: 110ms;
+    }
+
+    html.js .hero-fade {
+        opacity: 0;
+        animation: fade-up 800ms cubic-bezier(0.16, 1, 0.3, 1) 420ms forwards;
+    }
+}
+
+/* --------------------------------------------------------------- foto */
+
+.photo-tilt {
+    transform: rotate(-2.4deg);
+    transition: transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.photo-tilt:hover {
+    transform: rotate(0deg);
+}
+
+@media (max-width: 639px) {
+    .photo-tilt {
+        transform: none;
+    }
+}
+
+/* ------------------------------------------------------------ marquee */
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 42s linear infinite;
+    will-change: transform;
+}
+
+.marquee:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+/* ------------------------------------------------------------ navigasi */
+
+.mobile-menu summary {
+    list-style: none;
+}
+
+.mobile-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+.mobile-menu[open] [data-menu-open] {
+    display: none;
+}
+
+.mobile-menu[open] [data-menu-close] {
+    display: block;
+}
+
+.mobile-menu:not([open]) [data-menu-close] {
+    display: none;
+}
+
+.mobile-menu[open] > div {
+    animation: menu-in 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes menu-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+/* --------------------------------------------------------------- links */
+
+.nav-link,
+.footer-link {
+    text-decoration: none;
+    text-underline-offset: 0.25em;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+    color: #ffd200;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+.press {
+    transition:
+        background-color 180ms ease,
+        color 180ms ease,
+        transform 140ms ease;
+}
+
+.press:active {
+    transform: translateY(2px);
+}
+
+/* ---------------------------------------------------- pemilih minat */
+
+.interest {
+    background: #f2f1eb;
+    color: #08172f;
+    transition: background-color 220ms ease, color 220ms ease;
+}
+
+.interest:hover {
+    background: #ffd200;
+}
+
+.interest[open],
+.interest[open]:hover {
+    background: #0b4b9e;
+    color: #f2f1eb;
+}
+
+.interest summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+.interest summary::-webkit-details-marker {
+    display: none;
+}
+
+.interest-sign {
+    transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.interest[open] .interest-sign {
+    transform: rotate(45deg);
+}
+
+.interest[open] .interest-body {
+    animation: interest-in 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes interest-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --------------------------------------------------------------- agenda */
+
+.agenda-row {
+    transition: background-color 200ms ease, color 200ms ease;
+}
+
+.agenda-row:hover {
+    background: #ffd200;
+    color: #08172f;
+}
+
+/* ---------------------------------------------------------------- kabar */
+
+.news-shot img {
+    transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.news-shot:hover img {
+    transform: scale(1.035);
+}
+
+/* ------------------------------------------------------------------ cta */
+
+.cta-band {
+    transition: background-color 180ms ease, color 180ms ease;
+}
+
+.cta-band:hover,
+.cta-band:focus-visible {
+    background: #0b4b9e;
+    color: #f2f1eb;
+}
+
+.cta-word {
+    transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cta-band:hover .cta-word,
+.cta-band:focus-visible .cta-word {
+    transform: translateX(-1.6%);
+}
+
+/* ------------------------------------------------------- teks artikel */
+
+.prose-hima p {
+    margin-top: 1.35em;
+    font-size: 1.1875rem;
+    line-height: 1.72;
+}
+
+.prose-hima p:first-child {
+    margin-top: 0;
+}
+
+.prose-hima p:first-child::first-letter {
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    font-family: "Red Hat Display", ui-sans-serif, system-ui, sans-serif;
+    font-size: 3.4em;
+    font-weight: 900;
+    line-height: 0.76;
+    color: #0b4b9e;
+}
+
+@media (min-width: 640px) {
+    .prose-hima p {
+        font-size: 1.3125rem;
+    }
+}
+
+/* -------------------------------------------------------------- gerak */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .marquee-track {
+        animation: none !important;
+    }
+
+    .reveal,
+    .hero-fade {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .hero-line > span {
+        transform: none !important;
+        animation: none !important;
+    }
+
+    .photo-tilt,
+    .photo-tilt:hover {
+        transform: none;
+    }
+
+    .press:active {
+        transform: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
